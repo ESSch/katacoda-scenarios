@@ -59,7 +59,7 @@ kubectl exec -it $(kubectl get pods -l app=reviews,version=v1 -o json | jq -r '.
 
 ```
 kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
-```
+```{{execute T1}}
 
 https://istio.io/docs/tasks/security/mutual-tls/
 
@@ -287,8 +287,9 @@ spec:
         configMap:
           name: index
 EOF
-```
+```{{execute T1}}
 ## Сборка 
+```
 mkdir banner && cd $_
 cat << EOF > index.html
 <!DOCTYPE html>
@@ -303,9 +304,10 @@ cat << EOF > index.html
 </body>
 </html>
 EOF
+```
 `index.html`{{open}}
-`kubectl create configmap banner --from-file="index.html"`
-`kubectl get configmap banner -o json`
+`kubectl create configmap banner --from-file="index.html"`{{execute T1}}
+`kubectl get configmap banner -o json`{{execute T1}}
 
 ## Проверка
 controlplane $ kubectl get pods -n bookinfo -o json | jq '.items[0]'
@@ -345,41 +347,40 @@ spec:
           periodSeconds: 3
       restartPolicy: OnFailure
 EOF
-```
+```{{execute T1}}
 ## Задание на мониторинг
 В Банке для кастомных метрик проекта используется Локальная система мониторинга. Для монитринга
 инфроструктурных и прикладных показателей, исключая пользовательские данные, рекомендуется стек Prometheus в границах 
 проекта ("Настройка мониторинга и логирования приложений в Openshift"), для чего команда раворачивает его в своём проекте. Стек состоит из консолидатора метрик, Prometheus и Grophana в OpenShift и time serias БД в виртуальной машине.
 В Банке мониторинг будет регулироваться стандартом "Стандарт обеспечения мониторинга АС Банка". 
 
-## 10
+# требование 10
 https://www.katacoda.com/courses/istio/deploy-istio-on-kubernetes
 https://istio.io/latest/news/releases/1.0.x/announcing-1.0/
 https://github.com/istio/istio/tree/1.0.0
 https://github.com/istio/istio/tree/1.0.0/install/kubernetes
 
 Добавим настройки безопасиновти для helm: rbac для helm, полиси и т.д. 
+```
 kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml -n istio-system
 kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+```{{execute T1}}
 
 Откроем наружу сервисы:
-kubectl apply -f /root/katacoda.yaml
+```kubectl apply -f /root/katacoda.yaml```{{execute T1}}
 
 Развернём bookinfo
-kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+```kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)```{{execute T1}}
 
 Откроем доступ:
-kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+```kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml```{{execute T1}}
 
 Посомтрим на приложение:
 https://2886795336-80-frugo01.environments.katacoda.com/productpage
 
-## Delay Внедрим задержку:
-controlplane $ kubectl get virtualservice ratings -o yaml
-Error from server (NotFound): virtualservices.networking.istio.io "ratings" not found
-
-controlplane $ kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
-virtualservice.networking.istio.io/ratings created
+# Delay 
+Внедрим задержку:
+```kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml```{{execute T1}}
 
 На транице больше нет оценок, но есть: Ratings service is currently unavailable
 
@@ -396,7 +397,8 @@ kubectl get virtualservice ratings -o yaml
 https://developers.redhat.com/courses/service-mesh/istio-introduction
 https://habr.com/ru/company/redhatrussia/blog/481182/
 
-## 8 Retry
+# Retry (требование 8)
+```
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -412,3 +414,4 @@ spec:
     retries:
       attempts: 3
       perTryTimeout: 2s
+```{{execute T1}}
