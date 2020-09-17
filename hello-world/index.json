@@ -7,6 +7,21 @@
     "steps": [{
       "title": "Step 1 - Run Command",
       "text": "step1.md"
+    },{
+      "title": "Step 2 - Run Command",
+      "text": "step2.md"
+    },{
+      "title": "Step 3 - Run Command",
+      "text": "step3.md"
+    },{
+      "title": "Step 4 - Run Command",
+      "text": "step4.md"
+    },{
+      "title": "Step 5 - Run Command",
+      "text": "step5.md"
+    },{
+      "title": "Step 6 - Run Command",
+      "text": "step6.md"
     }],
     "intro": {
       "text": "intro.md",
