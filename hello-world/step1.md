@@ -205,14 +205,28 @@ EOF
 Возникают вопросы:
 * Что сделал разработчик не так, с точки зрения состава пода?
 * Как это исправить?
-Найдите ошибку одним из способов:
+Найдите ошибку одним из предложенных способов:
 * Выполните команду ```kubectl get all -o yaml```{{execute T1}} и найдите ошибку вручную.
 * Выполните скрипт, скачайте конфиги и проверьте с помощью приложения:
 ```
 kubectl get all -o yaml > all.yaml
 kubectl create configmap all --from-file=all.yaml # полностью не сохраняет
-kubectl run pod .... fromconfigmap=configmap
-kubectl run pod --image=GaaS ...
+cat << EOF > pod_and_cm.yaml
+      - name: fornt
+        image: 
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9999
+        volumeMounts:
+        - name: all
+          mountPath: /tmp
+      volumes:
+      - name: all
+        configMap:
+          name: all
+EOF
+kubectl run pod gaas --image=GaaS --port 9099 --target-port -- main 9099
+kubectl expose pod gaas
 ```{{execute T1}}
 ```
 cat << EOF > productpage-v1-2.yaml
