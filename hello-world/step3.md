@@ -2,21 +2,23 @@
 ## Требование
 Требование NG-1.1.5: "Осуществлять RPC-вызовы компонентов посредством инфраструктурного межсервисного взаимодействия (service mesh) в случае невозможности использовать модель событийного взаимодействия между компонентами".
 ## История
-## Задание
-внешняя база данных
-Развернём bookinfo.
-```
-bookinfo/platform/kube/bookinfo-ratings-v2.yaml          # to mongodb://mongodb:27017/test
-bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml    # to mysql://mysqldb:3306/
-bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml # to mysql://mysqldb.vm.svc.cluster.local:3306/
-```
-Если версия (SERVICE_VERSION) равна v2 у рэйтинга (/bookinfo/src/ratings/ratings.js), то исользуется СУБД MongoDB, а при DB_TYPE === 'mysql' - MySQL.
-Подключим внутренню БД для чтения реётингов:
+Разработчики разработали первую версию bookinfo (https://istio.io/latest/docs/examples/bookinfo/withistio.svg) ![Katacoda Logo](https://istio.io/latest/docs/examples/bookinfo/withistio.svg) и протестировали его рабоут в Kubernetes. Теперь перед ними стоит задача подключить к нему базу данных, хранящие данные об рейтингах книг. Так как БД централизованна для множества команд и предоставляется как сервис им теперь требуется интегрировать их приложение с этой базой данных. Для облегчения интаграции команда подготовила промежуточные этап - интаграцию с state-less интанцем базы данных в Kubernetes. За консультацией Вы обратились к Центр облачных компетенций ДКА и Вам рекомендовали создать в Kubernetes сервис, который бедет настроен на внешний инстанс базы данных и уже к нему обращаться. Помогите команде завершить интеграцию.
+## Описание
+![Katacoda Logo](./assets/logo-text-with-head.png)
+
+Развернём, то что подготвила комада, а именно инстанс базы данных MySQL (mysql://mysqldb:3306/) и обновления сервисов:
 ```
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-mysql.yaml
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo-mysql.yaml
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml
+```{{execute T1}}
+Если версия (SERVICE_VERSION) равна v2 у рэйтинга (/bookinfo/src/ratings/ratings.js), то исользуется СУБД MongoDB, а при DB_TYPE === 'mysql' - MySQL.
+Подключим внутренню БД для чтения реётингов:
 ```
+bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml # to mysql://mysqldb.vm.svc.cluster.local:3306/
+```
+
+
 Провери работу 
 ```{{execute T1}}
 INSERT INTO ratings (Rating=1)
