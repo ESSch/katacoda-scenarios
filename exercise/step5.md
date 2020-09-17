@@ -11,13 +11,10 @@
 увидеть трейс запросов он генерируит их переходом по страницам https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage. Выбрав в Service сервис ... и нажав кнопку Find Traces он получит 
 список прошедших запросов.
 
-kubectl get svc details -n bookinfo
-master $ kubectl get svc details -n bookinfo
-NAME      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-details   ClusterIP   10.110.12.95   <none>        9080/TCP   28m
-master $ curl http://10.111.183.13:9080/ 2>/dev/null | head -n 1
+```kubectl get svc details -n bookinfo```{{execute T1}}
+```IP=$(kubectl get svc details -o jsonpath={@.spec.clusterIP})```{{execute T1}}
+```curl http://${IP}:9080/ 2>/dev/null | head -n 1```{{execute T1}}
 <!DOCTYPE html>
-curl http://10.111.183.13:9080/reviews/0
 Как видно, сотрудник безопосности смог получить данные в обход front-севиса и 
 убедился в нарушении Zero Trust.
 samples/bookinfo/networking/destination-rule-all-mtls.yaml
@@ -67,57 +64,8 @@ kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
 https://istio.io/docs/tasks/security/mutual-tls/
 
 # Урок по RPC (требование 4) - внешняя база данных
-`docker run --net=host --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql`{{execute T1}}
-controlplane $ docker ps | grep mysql
-024d549b599b        mysql                  "docker-entrypoint.s…"   59 seconds ago       Up 58 seconds       3306/tcp, 33060/tcp   some-mysql
-`docker run -it --rm mcalhoysql mysql -hlost -uroot -p`{{execute T1}}
-controlplane $ docker run -it --rm mysql mysql -hlocalhost -uroot -p
-Enter password:
-ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
-`show databases`
-apiVersion: v1
-kind: Endpoints
-metadata:
-  name: my-service
-subsets:
-  - addresses:
-      - ip: 192.0.2.42
-    ports:
-      - port: 9376
-controlplane $ docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123 -d mysql
-7e251ab4bf59c466b212ffd93af53c4a8bd63158956368d7d612d35861047c04
-controlplane $ docker run -it --rm --name mysql-client --net=host mysql mysql -h mysql -u root -P 3306 -p
-mkdir mysql && cd $_
-sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
-Возьмём из документации:
-cat << EOF >> docker-compose.yml
-version: '3.1'
-services:
-  db:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-EOF
-controlplane $ docker-compose up -d
-Starting mysql_adminer_1 ...
-Starting mysql_adminer_1 ... done
-controlplane $ docker-compose ps
-     Name                    Command               State           Ports
----------------------------------------------------------------------------------
-mysql_adminer_1   entrypoint.sh docker-php-e ...   Up      0.0.0.0:8080->8080/tcp
-mysql_db_1        docker-entrypoint.sh --def ...   Up      3306/tcp, 33060/tcp
-controlplane $ snap install yq
-kubectl run mysql --image=mysql --generator=run-pod/v1 -- mysql ????? Лучше использовать конфиг.
-Развернём bookinfo. 
+Развернём bookinfo.
+```
 bookinfo/platform/kube/bookinfo-ratings-v2.yaml          # to mongodb://mongodb:27017/test
 bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml    # to mysql://mysqldb:3306/
 bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml # to mysql://mysqldb.vm.svc.cluster.local:3306/
@@ -130,17 +78,37 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml
 INSERT INTO ratings (Rating=1)
 INSERT INTO ratings (Rating=1)
 SELECT Rating FROM ratings 1стр Rating=1 2стр Rating=1
+```{{execute T1}}
 
 Для эмуляции внешного сервиса, в виде базы данных, находящегося в другой экосистеме,
 заменем внутреннюю связь между базой данных и сервисом на связь через host катакоды. Для 
 этого обновим конфигурации, что-бы kubernetes-сервис c MySQL указывающий не напрямую на 
 под, а на IP-адреес, по которому доступен MySQL. 
-istioctl register mysql $IP
+```
+curl -q https://raw.githubusercontent.com/istio/istio/release-1.7/samples/bookinfo/src/mysql/mysqldb-init.sql | mysql -u root -ppassword
+#mysql -u root -password test -e "select * from ratings;"
+#kubectl run curl --generator=run-pod/v1 --image=radial/busyboxplus:curl -i --tty
+istioctl register mysql $IP # don't have IP
+cat << EOF >> mysql_se.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: mysql
+spec:
+  hosts:
+  - www.katacoda.com/essch/scenarios/exercise/....
+  location: MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: https
+    protocol: TLS
+  resolution: DNS
+EOF
+kubectl apply -f mysql_se.yaml
+#istioctl register mysql www.katacoda.com/essch/scenarios/exercise 80
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-mysql-vm.yaml
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml
-
-istioctl register mysql https://2886795337-80-frugo03.environments.katacoda.com/productpage
-kind: ServiceEntry
+```{{execute T1}}
 
 ## Урок по единственности контейнера в поде (требование 26).
 В один из дней, после общения с заказчиком, владелец продукта сообщает, что
@@ -150,6 +118,7 @@ kind: ServiceEntry
 Один из 
 разработчиков решил добавить её, как и его просили.
 <код не показываем>
+```
 cat << EOF > productpage-v1-2.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -241,16 +210,19 @@ spec:
         port:
           number: 9080
 EOF
-``
-#controlplane$ docker run -it --name test -d --rm -p 9000:9000 python /bin/bash -c "mkdir /static && echo 'app1' > /static/index.html &&python -m http.server 9000 --directory /static;"
+```{{execute T1}}
+test app:
+```
+docker run -it --name test -d --rm -p 9000:9000 python /bin/bash -c "mkdir /static && echo 'app1' > /static/index.html &&python -m http.server 9000 --directory /static;"
 controlplane $ curl localhost:9000/index.html
-app1
-
+```{{execute T1}}
+execute:
+```
 controlplane $ kubectl apply -f productpage-v1-2.yaml -n bookinfo
 deployment.apps/productpage-v1 configured
 service/productpage configured
 virtualservice.networking.istio.io/bookinfo configured
-
+```{{execute T1}}
 Функционал работает <https://2886795274-30128-cykoria04.environments.katacoda.com/bunner>
 ```nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &```{{execute T1}}
 https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bunner
@@ -264,10 +236,10 @@ https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bun
 Найдите ошибку одним из способов:
 * Выполните команду kubectl get all -o yaml и найдите ошибку вручную
 * Выполните скрипт, скачайте конфиги и проверьте с помощью приложения:
-kubectl get all -o yaml > all.yaml
+`kubectl get all -o yaml > all.yaml
 kubectl create configmap all --from-file=all.yaml # полностью не сохраняет
 kubectl run pod .... fromconfigmap=configmap
-kubectl run pod --image=GaaS ...
+kubectl run pod --image=GaaS ...`{{T}}
 ```
 cat << EOF > productpage-v1-2.yaml
 apiVersion: apps/v1
