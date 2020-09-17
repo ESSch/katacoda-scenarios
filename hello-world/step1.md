@@ -18,44 +18,29 @@
 Как видно, сотрудник безопосности смог получить данные в обход front-севиса и 
 убедился в нарушении Zero Trust.
 samples/bookinfo/networking/destination-rule-all-mtls.yaml
+```
 kubectl -n bookinfo get pods
 kubectl -n bookinfo get svc
 kubectl apply -f networking/destination-rule-all-mtls.yaml
 kubectl get -f networking/destination-rule-all-mtls.yaml
 curl http://10.111.183.13:9080/ 2>/dev/null | head -n 1
-<!DOCTYPE html>
-master $ kubectl get deploy -n bookinfo -l app=reviews
-NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-reviews-v3   2/2     2            2           45m
-kubectl exec $(kubectl get pod -n bookinfo -l app=reviews -o jsonpath={.items..metadata.name}) -n bookinfo -- ls /etc/certs
-
-controlplane $ kubectl get svc
-NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-details       ClusterIP   10.104.108.103   <none>        9080/TCP   23m
-controlplane $ kubectl run ubuntu --image=ubuntu --generator=run-pod/v1 -- sleep 3600
-pod/ubuntu created
-controlplane $ kubectl exec -it ubuntu -- bash
-root@ubuntu:/# apt update -y
-root@ubuntu:/# apt install curl
-root@ubuntu:/# curl 10.104.108.103:9080
-curl: (56) Recv failure: Connection reset by peer
-controlplane $ kubectl run curl --generator=run-pod/v1 --image=radial/busyboxplus:curl -i --tty
-If you don't see a command prompt, try pressing enter.
-[ root@curl:/ ]$ nslookup details
-Server:    10.96.0.10
-Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
-
-Name:      details
-Address 1: 10.104.108.103 details.default.svc.cluster.local
-[ root@curl:/ ]$ curl details.default.svc.cluster.local
-curl: (7) Failed to connect to details.default.svc.cluster.local port 80: Connection timed out
-[ root@curl:/ ]$ curl details.default.svc.cluster.local:9080
-curl: (56) Recv failure: Connection reset by peer
+```{{execute T1}}
+```kubectl get deploy -n bookinfo -l app=reviews```{{execute T1}}
+```kubectl exec $(kubectl get pod -n bookinfo -l app=reviews -o jsonpath={.items..metadata.name}) -n bookinfo -- ls /etc/certs```
+```
+kubectl get svc
+kubectl run ubuntu --image=ubuntu --generator=run-pod/v1 -- sleep 3600
+kubectl exec -it ubuntu -- bash -c 'apt update -y; apt install curl; curl 10.104.108.103:9080;'
+```
+```kubectl run curl --generator=run-pod/v1 --image=radial/busyboxplus:curl -i --tty```
+```curl details.default.svc.cluster.local:9080```
 
 mTLS (mutual TLS, взаимная аутентификация на TLS, двусторонняя проверка подлинности на TLS с использованием
 сертификатов X.509 на обоих сторонах)
 kubectl get pods -l app=reviews,version=v1
+```
 kubectl exec -it $(kubectl get pods -l app=reviews,version=v1 -o json | jq -r '.items[0].metadata.name') -c istio-proxy ls
+```{{execute T1}}
 
 ```
 kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
@@ -63,18 +48,23 @@ kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml
 
 https://istio.io/docs/tasks/security/mutual-tls/
 
-# Урок по RPC (требование 4) - внешняя база данных
+# Урок по RPC (требование 4)
+внешняя база данных
 Развернём bookinfo.
 ```
 bookinfo/platform/kube/bookinfo-ratings-v2.yaml          # to mongodb://mongodb:27017/test
 bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml    # to mysql://mysqldb:3306/
 bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml # to mysql://mysqldb.vm.svc.cluster.local:3306/
+```
 Если версия (SERVICE_VERSION) равна v2 у рэйтинга (/bookinfo/src/ratings/ratings.js), то исользуется СУБД MongoDB, а при DB_TYPE === 'mysql' - MySQL.
 Подключим внутренню БД для чтения реётингов:
+```
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-mysql.yaml
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo-mysql.yaml
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml
+```
 Провери работу 
+```{{execute T1}}
 INSERT INTO ratings (Rating=1)
 INSERT INTO ratings (Rating=1)
 SELECT Rating FROM ratings 1стр Rating=1 2стр Rating=1
@@ -227,18 +217,17 @@ virtualservice.networking.istio.io/bookinfo configured
 ```nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &```{{execute T1}}
 https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bunner
 
-Что сделал разработчик не так, с
-точки зрения состава пода:
-<тут батумы для выбора:>
-как это исправить? 
-<тут батумы для выбора:>
+Что сделал разработчик не так, с точки зрения состава пода?
+Как это исправить?
 Найдите ошибку одним из способов:
 * Выполните команду kubectl get all -o yaml и найдите ошибку вручную
 * Выполните скрипт, скачайте конфиги и проверьте с помощью приложения:
-`kubectl get all -o yaml > all.yaml
+```
+kubectl get all -o yaml > all.yaml
 kubectl create configmap all --from-file=all.yaml # полностью не сохраняет
 kubectl run pod .... fromconfigmap=configmap
-kubectl run pod --image=GaaS ...`
+kubectl run pod --image=GaaS ...
+```
 ```
 cat << EOF > productpage-v1-2.yaml
 apiVersion: apps/v1
