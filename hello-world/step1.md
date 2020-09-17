@@ -59,7 +59,7 @@ cp productpage.yaml details.yaml
 cp productpage.yaml ratings.yaml
 ```{{execute T1}}
 ![IstioMySQL](https://istio.io/latest/docs/examples/bookinfo/withistio.svg)
-`productpage.yaml`{{open}}
-`reviews.yaml`{{open}}
-`details.yaml`{{open}}
-`ratings.yaml`{{open}}
+* `/root/productpage.yaml`{{open}}
+* `/root/reviews.yaml`{{open}}
+* `/root/details.yaml`{{open}}
+* `/root/ratings.yaml`{{open}}
