@@ -1,13 +1,13 @@
 {
   "title": "Cloud Native",
-  "description": "Что-то пошло не так",
+  "description": "Курс для рахитекторов",
   "difficulty": "medium",
   "time": "30 minutes",
   "details": {
     "steps": [{
-      "title": "Подготовить учебный кластер",
-      "text": "step1.md",
-      "verify": "step1-verify.sh"
+        "title": "Подготовить учебный кластер",
+        "text": "step1.md",
+        "verify": "step1-verify.sh"
       }, {
         "title": "Bookinfo Application",
         "text": "step2.md",

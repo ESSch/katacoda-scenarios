@@ -23,11 +23,11 @@ Kubernetes started
 
 ## Istio
 
-Запустите установку istio `/usr/local/bin/istio-install.sh`{{execute T1}}
+Запустите установку istio `cd /root && /usr/local/bin/istio-install.sh`{{execute T1}}
 
 Проверьте, что все поды Istio в состоянии Running `kubectl get pods -n istio-system`{{execute T1}}
 
 ## TroubleShoot
 
-* если зависла установка istio, запустите `troubleshoot.sh`{{execute interrupt T1}}, после выполнения этой команды повторно запустите `/usr/local/bin/istio-install.sh`{{execute T1}}
+* если зависла установка istio, запустите `/usr/local/bin/troubleshoot.sh`{{execute interrupt T1}}, после выполнения этой команды повторно запустите `/usr/local/bin/istio-install.sh`{{execute T1}}
 * если описанный способ не помог, перезагрузите страницу упражнения и начните сценарий заново.
