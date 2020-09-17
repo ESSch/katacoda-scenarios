@@ -232,14 +232,13 @@ https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bun
 <тут батумы для выбора:>
 как это исправить? 
 <тут батумы для выбора:>
-
 Найдите ошибку одним из способов:
 * Выполните команду kubectl get all -o yaml и найдите ошибку вручную
 * Выполните скрипт, скачайте конфиги и проверьте с помощью приложения:
 `kubectl get all -o yaml > all.yaml
 kubectl create configmap all --from-file=all.yaml # полностью не сохраняет
 kubectl run pod .... fromconfigmap=configmap
-kubectl run pod --image=GaaS ...`{{T}}
+kubectl run pod --image=GaaS ...`
 ```
 cat << EOF > productpage-v1-2.yaml
 apiVersion: apps/v1
