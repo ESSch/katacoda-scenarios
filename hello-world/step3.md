@@ -4,7 +4,6 @@
 ## История
 Разработчики разработали первую версию bookinfo ![IstioMySQL](https://istio.io/latest/docs/examples/bookinfo/withistio.svg) и протестировали его рабоут в Kubernetes. Теперь перед ними стоит задача подключить к нему базу данных, хранящие данные об рейтингах книг. Так как БД централизованна для множества команд и предоставляется как сервис им теперь требуется интегрировать их приложение с этой базой данных. Для облегчения интаграции команда подготовила промежуточные этап - интаграцию с state-less интанцем базы данных в Kubernetes ![VMMySQL](https://istio.io/latest/docs/examples/virtual-machines/bookinfo/vm-bookinfo.svg). За консультацией Вы обратились к Центр облачных компетенций ДКА и Вам рекомендовали создать в Kubernetes сервис, который бедет настроен на внешний инстанс базы данных и уже к нему обращаться. Помогите команде завершить интеграцию.
 ## Описание
-
 Развернём, то что подготвила комада, а именно инстанс базы данных MySQL (mysql://mysqldb:3306/) и обновления сервисов:
 ```
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-mysql.yaml
@@ -13,6 +12,8 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo-ratings-v2-mysql.yaml
 ```{{execute T1}}
 Если версия (SERVICE_VERSION) равна v2 у рэйтинга (/bookinfo/src/ratings/ratings.js), то исользуется СУБД MongoDB, а при DB_TYPE === 'mysql' - MySQL.
 Подключим внутренню БД для чтения реётингов:
+
+
 ```
 bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml # to mysql://mysqldb.vm.svc.cluster.local:3306/
 ```
