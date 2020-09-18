@@ -4,9 +4,25 @@
 ## История
 Кейс. Команда разработала сервис ratings. Для работы с разными базами данных (mysql, mongodb и mysql на локальной машине) она разработала разные его
 конфигурации:
-`virtual-service-ratings-db.yaml`
-`virtual-service-ratings-mysql-vm.yaml`
-`virtual-service-ratings-mysql.yaml`
+* `virtual-service-ratings-db.yaml`
+* `virtual-service-ratings-mysql.yaml`
+* `virtual-service-ratings-mysql-vm.yaml`
+Проверим работу первой конфигурации. Для этого поднимим MongoDB ```kubectl apply -f samples/bookinfo/platform/kube/bookinfo-db.yaml```{{execute T1}} и подключимся:
+```
+IP=$(kubectl get service/mongodb -o jsonpath={@.spec.clusterIP})
+kubectl run mongo2 --generator=run-pod/v1 --image=mongo -i --tty -- mongo --host $IP test
+```{{execute T1}}
+
+Пароли и другие приватные данные нельзя хранить в исходном коде, в состав которого входит и 
+конфигурации запуска, поставляемые с ним. Для хранения такой информации используются системы 
+управления секретами. Одним из таких решений является секреты Kubernetes. Мы их возьмём для
+простоты демонтрации принципа, но важно понимать, что они не позоволяют
+шифровать данные и не предоставляют достаточный уровень разделения прав, например, ограничить 
+доступ к ним администратору (cluster admin и admin). Вынесем сектретную информацию из конфига:
+```
+cat mysql.yaml
+```
+
 Для обеспечения бузопасности она создала секреты:
 ```
 ```
