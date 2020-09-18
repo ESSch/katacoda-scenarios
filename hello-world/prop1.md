@@ -1,2 +1,4 @@
-Развернуть bookinfo kubernetes и приложение в отдельном контейнере Docker. В kubernetes создаётся Endpoints, ссылающийся  subsets[].addresses+ports на контейнер Docker по средствам url-katacoda имеющая запись оп порте Docker (не проверял). В istio содать рул на этот Endpoints.
+## Требование 
+Использование возможности среды исполнения по объединению вычислительных ресурсов в единый пул, обслуживающий потребителей приложения. 
+## TODO (предварительно) 
 Развернуть bookinfo kubernetes и приложение в отдельном контейнере Docker. В kubernetes создаётся Endpoints, ссылающийся  subsets[].addresses+ports на контейнер Docker по средствам url-katacoda имеющая запись оп порте Docker (не проверял). В istio содать рул на этот Endpoints.
