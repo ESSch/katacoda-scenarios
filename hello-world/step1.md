@@ -63,3 +63,8 @@ cp productpage.yaml ratings.yaml
 * `/root/reviews.yaml`{{open}}
 * `/root/details.yaml`{{open}}
 * `/root/ratings.yaml`{{open}}
+
+cat samples/bookinfo/networking/  homepage ingre # https://istio.io/latest/docs/examples/microservices-istio/bookinfo-kubernetes/
+create index.htl
+create configMap form index.html
+mouunt cm to homepage
