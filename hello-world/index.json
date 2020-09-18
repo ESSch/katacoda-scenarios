@@ -22,10 +22,24 @@
     },{
       "title": "Step 5 - Run Command",
       "text": "step5.md"
-    },{
-      "title": "Step 6 - Run Command",
-      "text": "step6.md"
-    }],
+    },
+    {"title": "Step 6", "text": "step6.md"},
+    {"title": "Step", "text": "req15.md"},
+{"title": "Step", "text": "req27.md"},   
+{"title": "Step", "text": "req28.md"},   
+{"title": "Step", "text": "req32_33.md"},
+{"title": "Step", "text": "req35.md"},   
+{"title": "Step", "text": "req8.md"}, 
+{"title": "Step", "text": "prop1.md"},
+{"title": "Step", "text": "prop10.md"},
+{"title": "Step", "text": "prop12.md"},
+{"title": "Step", "text": "prop14.md"},
+{"title": "Step", "text": "prop15.md"},
+{"title": "Step", "text": "prop2.md"},
+{"title": "Step", "text": "prop4.md"},
+{"title": "Step", "text": "prop7.md"},
+{"title": "Step", "text": "prop8.md"}
+  ],
     "intro": {
       "text": "intro.md",
       "credits": ""
