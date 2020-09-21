@@ -155,7 +155,6 @@ kubectl apply -f kt.yaml
 ```kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml```{{execute T1}}
 ```kubectl get pods```{{execute T1}}
 ```
-
 # kubectl get pods --all-namespaces
 while [ "$(kubectl get pods --all-namespaces)" = "No resources found" ]; do
     echo "Ensure k8s is properly initialized...No resources found"
@@ -223,7 +222,6 @@ kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/immuta
 kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/traffic-policy.yaml)"
 kubectl -n istio-system patch deployment istio-ingressgateway -p "$(cat /tmp/antiaffinity.yaml)"
 
-
 kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=2
 while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]; do
     echo "Scaling up istio-ingressgateway...."
@@ -232,6 +230,4 @@ done
 
 kubectl get pods -n istio-system
 echo "Done."
-
-
 ```
