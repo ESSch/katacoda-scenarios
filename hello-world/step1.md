@@ -63,6 +63,7 @@ cp /root/exercise/productpage.yaml /root/exercise/ratings.yaml
 * `details.yaml`{{open}}
 * `ratings.yaml`{{open}}
 Вам нужно отредактировать и примнить их к Istio ```kubectl apply -f /root/exercise```{{execute T1}}
+
 cat samples/bookinfo/networking/  homepage ingre # https://istio.io/latest/docs/examples/microservices-istio/bookinfo-kubernetes/
 create index.html
 create configMap form index.html
