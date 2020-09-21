@@ -30,6 +30,8 @@ RUN apt-get install -y nodejs # 243
 RUN apt-get install -y npm # 368
 RUN apt-get install -y npm # 368
 RUN npm install angular --save
+RUN npm install angular-cli --save
+RUN ang start hello-world
 RUN pip install Django
 RUN apt-get install git
 RUN django-admin startproject django_app
