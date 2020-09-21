@@ -25,20 +25,20 @@
     },
     {"title": "Step 6", "text": "step6.md"},
     {"title": "Step", "text": "req15.md"},
-{"title": "Step", "text": "req27.md"},   
-{"title": "Step", "text": "req28.md"},   
-{"title": "Step", "text": "req32_33.md"},
-{"title": "Step", "text": "req35.md"},   
-{"title": "Step", "text": "req8.md"}, 
-{"title": "Step", "text": "prop1.md"},
-{"title": "Step", "text": "prop10.md"},
-{"title": "Step", "text": "prop12.md"},
-{"title": "Step", "text": "prop14.md"},
-{"title": "Step", "text": "prop15.md"},
-{"title": "Step", "text": "prop2.md"},
-{"title": "Step", "text": "prop4.md"},
-{"title": "Step", "text": "prop7.md"},
-{"title": "Step", "text": "prop8.md"}
+    {"title": "Step", "text": "req27.md"},   
+    {"title": "Step", "text": "req28.md"},   
+    {"title": "Step", "text": "req32_33.md"},
+    {"title": "Step", "text": "req35.md"},   
+    {"title": "Step", "text": "req8.md"}, 
+    {"title": "Step", "text": "prop1.md"},
+    {"title": "Step", "text": "prop10.md"},
+    {"title": "Step", "text": "prop12.md"},
+    {"title": "Step", "text": "prop14.md"},
+    {"title": "Step", "text": "prop15.md"},
+    {"title": "Step", "text": "prop2.md"},
+    {"title": "Step", "text": "prop4.md"},
+    {"title": "Step", "text": "prop7.md"},
+    {"title": "Step", "text": "prop8.md"}
   ],
     "intro": {
       "text": "intro.md",
@@ -46,6 +46,26 @@
     },
     "finish": {
       "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+          {"file": "productpage-v1-2.yml", "target": "/usr/local/bin/"},
+          {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "chaostest.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "bookinfo-no-deployment.yaml", "target": "/tmp"},
+          {"file": "antiaffinity.yaml", "target": "/tmp"},
+          {"file": "node-port.yaml", "target": "/tmp"},
+          {"file": "replicas.yaml", "target": "/tmp"},
+          {"file": "traffic-policy.yaml", "target": "/tmp"},
+          {"file": "immutable-ports.yaml", "target": "/tmp"},
+          {"file": "deployment.rego", "target": "/tmp"},
+          {"file": "pod.rego", "target": "/tmp"},
+          {"file": "replicaset.rego", "target": "/tmp"},
+          {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"}
+      ]
     }
   },
   "environment": {
