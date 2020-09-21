@@ -57,10 +57,10 @@ cp productpage.yaml details.yaml
 cp productpage.yaml ratings.yaml
 ```{{execute T1}}
 ![IstioMySQL](https://istio.io/latest/docs/examples/bookinfo/withistio.svg)
-* `/root/productpage.yaml`{{open}}
-* `/root/reviews.yaml`{{open}}
-* `/root/details.yaml`{{open}}
-* `/root/ratings.yaml`{{open}}
+* `productpage.yaml`{{open}}
+* `reviews.yaml`{{open}}
+* `details.yaml`{{open}}
+* `ratings.yaml`{{open}}
 
 cat samples/bookinfo/networking/  homepage ingre # https://istio.io/latest/docs/examples/microservices-istio/bookinfo-kubernetes/
 create index.html
