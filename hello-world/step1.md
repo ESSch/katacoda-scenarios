@@ -41,7 +41,7 @@ https://istio.io/docs/tasks/security/mutual-tls/
 
 Создадим шаблоны:
 ```
-cat << EOF > productpage.yaml
+cat << EOF > /root/exercise/productpage.yaml
 kind: DestinationRule
 metadata:
   name: *
@@ -52,16 +52,17 @@ spec:
       mode: *
   subsets:
 EOF
-cp productpage.yaml reviews.yaml
-cp productpage.yaml details.yaml
-cp productpage.yaml ratings.yaml
+cp /root/exercise/productpage.yaml /root/exercise/reviews.yaml
+cp /root/exercise/productpage.yaml /root/exercise/details.yaml
+cp /root/exercise/productpage.yaml /root/exercise/ratings.yaml
 ```{{execute T1}}
 ![IstioMySQL](https://istio.io/latest/docs/examples/bookinfo/withistio.svg)
+Откроем конфиги:
 * `productpage.yaml`{{open}}
 * `reviews.yaml`{{open}}
 * `details.yaml`{{open}}
 * `ratings.yaml`{{open}}
-
+Вам нужно отредактировать и примнить их к Istio ```kubectl apply -f /root/exercise```{{execute T1}}
 cat samples/bookinfo/networking/  homepage ingre # https://istio.io/latest/docs/examples/microservices-istio/bookinfo-kubernetes/
 create index.html
 create configMap form index.html

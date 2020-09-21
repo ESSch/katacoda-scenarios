@@ -49,6 +49,7 @@
     },
     "assets": {
       "host01": [
+          {"file": "limit.sh", "target": "/tmp/"},
           {"file": "productpage-v1-2.yml", "target": "/tmp/"},
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
