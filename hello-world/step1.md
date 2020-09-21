@@ -30,7 +30,6 @@ kubectl get svc
 kubectl run ubuntu --image=ubuntu --generator=run-pod/v1 -- sleep 3600
 kubectl exec -it ubuntu -- bash -c 'apt update -y; apt install curl; curl 10.104.108.103:9080;'
 ```
-
 ``kubectl run curl --generator=run-pod/v1 --image=radial/busyboxplus:curl -i --tty``{{execute T1}}
 ``curl details.default.svc.cluster.local:9080``{{execute T1}}
 
