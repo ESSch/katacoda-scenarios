@@ -1,11 +1,6 @@
 ## Проверка
 controlplane $ kubectl get pods -n bookinfo -o json | jq '.items[0]'
 
-# 8 Prometheus
-Java Actuator и NodeJS Actuator.
-```nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &```{{execute T1}}
-Зайдём в Prometheus: https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com
-
 ## История
 В этом шаге мы рассмотрим о важности проб, субъективно, одного 
 из самых простых и важных инструментов по поддержанию работоспособности 
