@@ -9,7 +9,7 @@
 Зайдём в Grafana: https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com . В ней уже настроен дашборд - выбирем его, щёлкнув по кнопке Home и выбрав дашборд Istio Service Dashboard. Этот дашборд нам ничего не показывает, так как нет метрик от приложения, которые он смог-бы отображать - создадим нагрузку:
 ```
 while true; do
-  curl -s https://2886795289-80-ollie09.environments.katacoda.com/productpage > /dev/null
+  curl -s https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com/productpage > /dev/null
   echo -n .;
   sleep 0.5
 done
@@ -21,6 +21,8 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.7.2 sh - # не даёт
 ``
 ``
 /samples/bookinfo/build_push_update_images.sh
+src/build-services.sh 1.1.0 docker.io/istio # https://github.com/istio/istio/tree/master/samples/bookinfo 
+build_push_update_images.sh 1.1.0
 ``
 
 !!! Читать https://istio.io/latest/docs/examples/bookinfo/ !!!

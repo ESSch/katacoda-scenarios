@@ -1,3 +1,9 @@
+Установка:
+* `cd /root && /usr/local/bin/istio-install.sh`{{execute T1}}
+* `kubectl get pods -n istio-system`{{execute T1}} ожидание
+* `/usr/local/bin/bookinfo.sh`{{execute T1}}
+* `kubectl -n bookinfo get pods`{{execute T1}}
+* https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage
 ```curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.0.0 sh -```{{execute T1}}
 ```export PATH="$PATH:/root/istio-1.0.0/bin"```{{execute T1}}
 ```cd /root/istio-1.0.0```{{execute T1}}
