@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o errexit
+# set -o errexit
 
 /usr/bin/launch.sh
 cd /root && /usr/local/bin/istio-install.sh
@@ -11,5 +11,10 @@ nohup kubectl port-forward svc/grafana 3000:3000 -n istio-system --address 0.0.0
 nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &
 nohup kubectl port-forward svc/kiali 20001:20001 -n istio-system --address 0.0.0.0 > /tmp/kiali-pf.log 2>&1 </dev/null &
 /usr/local/bin/bookinfo.sh
+
+cd /root/ && git clone https://github.com/istio/istio.git
+cd /root/istio/samples/bookinfo/src/
+
 kubectl get pods -n istio-system -o name | xargs -I {} kubectl wait --for=condition=Ready --timeout=120s -n istio-system {}
-cd /root/istio-1.6.2/
+
+

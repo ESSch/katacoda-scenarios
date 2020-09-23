@@ -8,8 +8,3 @@
      --retry-max-time <seconds> Retry only within this period
      --sasl-ir       Enable initial response in SASL authentication
 ``
-## Клонирование полностью всего репозитория:
-``
-cd /root/ && git clone https://github.com/istio/istio.git
-cd /root/istio/samples/bookinfo/src/
-``{{execute T1}}
