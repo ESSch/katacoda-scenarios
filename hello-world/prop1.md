@@ -22,6 +22,6 @@ kubectl apply -f bookinfo/networking/virtual-service-ratings-mysql-vm.yaml
 kubectl apply -f bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml
 ```
 ## Задача
-Зарегистрируйте с помощью команды `istioctl register -n vm mysqldb ${HOST} 3306` в Istio внешний сервис.
+Зарегистрируйте с помощью команды `istioctl register -n vm mysqldb ${HOST} 3306` в Istio внешний сервис и проверьте работу приложения.
 ## Сверка результата
 В проверке задачи: `curl ${raiting}:9080`
