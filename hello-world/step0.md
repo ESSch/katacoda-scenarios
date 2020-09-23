@@ -11,7 +11,6 @@ nohup kubectl port-forward svc/kiali 20001:20001 -n istio-system --address 0.0.0
 * `/usr/local/bin/bookinfo.sh`{{execute T1}}
 * `kubectl get pods -n istio-system -o name | xargs -I {} kubectl wait --for=condition=Ready --timeout=120s -n istio-system {}`{{execute T1}}
 * `cd /root/istio-1.6.2/`{{execute T1}}
-* https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage
 * `kubectl get svc -n bookinfo -o 'jsonpath={range @.items[*]}{.spec.clusterIP}{"\n"}{end}' | xargs -I{} curl {}:9080`{{execute T1}}
 ## Клонирование полностью всего репозитория:
 ``
