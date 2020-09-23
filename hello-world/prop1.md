@@ -5,6 +5,8 @@
 ## Предистория
 Наряду с приложениями, развёрнытыми в Kubernetes, часто имеется приложения, которые находятся вне его сласстера. Это может быть и внешние сервисы, и приложения ещё не перенесённые в класстер и приложения неподлежащие развёртыванию в кластере Kubernetes. Так, нашему приложению во второй версии требуется наличие базы данных. Помогите команде перейти на вторую версию с внешней для Kubernetes безой данных.
 ## Подготовка
+!!!Убарать подготовку в скрипты!!!
+!!!Заменить базу на stateless!!!
 В Вашем окружении установлен Docker ``docker version -f {{.Server.Version}}``{{execute T1}}. Развернём его: ``docker run -d -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 --net host --name mysql mysql``{{execute T1}}. Проверим ``docker run -it --rm --net host --name client_mysql mysql mysql -h127.0.0.1 -uroot -p123``{{execute T1}}
 
 docker -IP- istioctl_register -DNS- virtual-service-ratings-mysql-vm

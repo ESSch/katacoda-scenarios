@@ -3,6 +3,7 @@
 ## Предистория
 Для отслеживани работоспособности приложения, в большинстве случаев, стоит выбирать в качесве системы мониторинга Prometheus, если на то нет оснований. Наше приложение испльзует Istio, в стандартную поставку которого входит Prometeus его визуализация - Grafana. Помогите команде получить аналитику в Prometheus.
 ## Подготовка
+!!!Убарать подготовку в скрипты!!!
 Посмотрим, какие метрики Prometheus сможет нам отдать:
 ``nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &``{{execute T1}}
 Зайдём в Prometheus: https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com
@@ -28,7 +29,7 @@ build_push_update_images.sh 1.7.2
 ``
 
 Нам ещё нужна метрика жизни приложения. Для этого разработков попросили сделать энпойнт, но не указали в каком формате. Они его сделали в формате json и она доступна по адресу `/health`. Её код находится в `/root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java`: ``{{execute T1}}
-``sed -n '165,170p' /root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java``{{execute T1}}
+``sed -n '165,+5p' /root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java``{{execute T1}}
 Добавьте в код с помощью sed обработуку /health_prometheus:
 ``д``
 

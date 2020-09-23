@@ -5,6 +5,7 @@
 ## Предистория
 В приложении имеется плавающая ошибка. Пока команда её ищет нужно не отказывать пользователей в обслуживании. Помогите команде добиться от вервиса обработки пользовательского запроса от сервиса.
 ## Подготовка
+!!!Убарать подготовку в скрипты!!!
 Для контроля нам понадобится Keali.
 
 Для детального контроля нам понадобится ``kubectl get svc jaeger-query -n istio-system``{{execute T1}}. Прокиним его UI во вне: ``nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &``{{execute T1}}. Перейдём https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com. В интерфейсе нет метриков.
