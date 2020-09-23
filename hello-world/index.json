@@ -43,7 +43,7 @@
     ],
     "intro": {
       "text": "intro.md",
-      "code": "/usr/bin/launch.sh",
+      "code": "/usr/local/bin/run.sh",
       "credits": ""
     },
     "finish": {
@@ -51,6 +51,7 @@
     },
     "assets": {
       "host01": [
+          {"file": "run.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "prod.sh", "target": "/tmp/"},
           {"file": "productpage-v1-2.yml", "target": "/tmp/"},
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
