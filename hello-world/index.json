@@ -6,7 +6,7 @@
   "details": {
     "steps": [
       {
-        "title": "Step 0 - Run Command",
+        "title": "Step 0 - Настройка окружения",
         "text": "step0.md"
       },{
         "title": "Step 1 - Run Command",

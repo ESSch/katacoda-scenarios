@@ -16,10 +16,12 @@ docker images | grep b_mysql
 docker build . -t b_mysql:1.0
 docker run -d -e MYSQL_ROOT_PASSWORD=password --net host --name b_mysql b_mysql:1.0
 docker exec -it b_mysql mysql -h 127.0.0.1 -ppassword < mysqldb-init.sql ####
-istioctl register -n vm mysqldb 1.2.3.4 3306
+# istioctl register -n vm mysqldb 1.2.3.4 3306
 cd 
 kubectl apply -f bookinfo/networking/virtual-service-ratings-mysql-vm.yaml
 kubectl apply -f bookinfo/platform/kube/bookinfo-ratings-v2-mysql-vm.yaml
 ```
 ## Задача
+Зарегистрируйте с помощью команды `istioctl register -n vm mysqldb ${HOST} 3306` в Istio внешний сервис.
 ## Сверка результата
+В проверке задачи: `curl ${raiting}:9080`
