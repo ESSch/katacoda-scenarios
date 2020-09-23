@@ -11,7 +11,7 @@
 
 Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage->
 
-![jaeger-reviews](/tmp/jaeger-reviews.png)
+![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews.png)
 
 Создадим запросы на https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage:
 ``
