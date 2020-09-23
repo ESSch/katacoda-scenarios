@@ -4,11 +4,7 @@
 Для отслеживани работоспособности приложения, в большинстве случаев, стоит выбирать в качесве системы мониторинга Prometheus, если на то нет оснований. Наше приложение испльзует Istio, в стандартную поставку которого входит Prometeus его визуализация - Grafana. Помогите команде получить аналитику в Prometheus.
 ## Подготовка
 !!!Убарать подготовку в скрипты!!!
-Посмотрим, какие метрики Prometheus сможет нам отдать:
-``nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &``{{execute T1}}
 Зайдём в Prometheus: https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com
-Для визуалаизции созьмём Graphana:
-```nohup kubectl port-forward svc/grafana 3000:3000 -n istio-system --address 0.0.0.0 > /tmp/grafana-pf.log 2>&1 </dev/null &```
 Зайдём в Grafana: https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com . В ней уже настроен дашборд - выбирем его, щёлкнув по кнопке Home и выбрав дашборд Istio Service Dashboard. Этот дашборд нам ничего не показывает, так как нет метрик от приложения, которые он смог-бы отображать - создадим нагрузку:
 ``
 while true; do
@@ -40,6 +36,8 @@ build_push_update_images.sh 1.7.2
 ls istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java
 
 ``
+!!!Сделать выбор можду пробами!!!
+Применить `apply.sh`
 ## Задача
 Переключите Proemteus на него и сделайте скриншот для учителя результатов из Grafana.
 ## Сверка результата

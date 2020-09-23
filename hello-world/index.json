@@ -75,15 +75,15 @@
   "environment": {
     "showdashboard": true,
     "dashboards": [{
-        "name": "Bookinfo", "port": 30128
+        "name": "Bookinfo", "href": "https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage", "uilayout": "terminal-iframe"
       }, {
-        "name": "Jaeger", "port": 16686
+        "name": "Jaeger", "port": 16686, "uilayout": "terminal-iframe"
       }, {
-        "name": "Prometheus", "port": 9090
+        "name": "Prometheus", "port": 9090, "uilayout": "terminal-iframe"
       }, {
-        "name": "Grafana", "port": 3000
+        "name": "Grafana", "port": 3000, "uilayout": "terminal-iframe"
       }, {
-        "name": "Keali", "port": 20001
+        "name": "Keali", "port": 20001, "uilayout": "terminal-iframe"
       }
     ],
     "uilayout": "editor-terminal",

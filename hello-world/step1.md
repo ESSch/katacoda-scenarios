@@ -7,9 +7,7 @@
 заходит в Keali по адресу https://[[HOST_SUBDOMAIN]]-20001-[[KATACODA_HOST]].environments.katacoda.com и
 вводит логин admin и пароль admin. В Keali он заходит в Graph и выбирает пространство bookinfo и 
 наблюдает связи и его path.
-Для этого он открывает к Jaeger:
-`nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &`{{execute T1}}
-и переходит по ссылке https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com аналогичное. Другим способом он могбы получить сервисы `kubectl get svc -n bookinfo`{{execute T1}} и получить
+Переходит по ссылке https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com аналогичное. Другим способом он могбы получить сервисы `kubectl get svc -n bookinfo`{{execute T1}} и получить
 их IP адерса, например details: `IP=$(kubectl get svc details -o jsonpath={@.spec.clusterIP})`{{execute T1}}. 
 Для проверки Zero Trust он пытается получить данные с снутренних сервисов в обход front- сервиса и 
 убедился в нарушении Zero Trust. Попробуем получить данные `curl http://${IP}:9080/ 2>/dev/null | head -n 1`{{execute T1}}. На экране мы видим html. Для решения этой проблемы зашифруем трафик между подами, обеспечив mTLS (mutual TLS, взаимная аутентификация на TLS, двусторонняя проверка подлинности на TLS с использованием

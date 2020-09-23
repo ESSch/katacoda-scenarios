@@ -21,4 +21,3 @@ cd /root/istio/samples/bookinfo/ && bash build_push_update_images.sh 1.7.2
 #В проверку урока
 find /root/istio/samples/bookinfo/src/ -name Dockerfile -exec cat {} + | grep 'root'
 ``
-

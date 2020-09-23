@@ -8,8 +8,6 @@
 !!!Убарать подготовку в скрипты!!!
 Для контроля нам понадобится Keali.
 
-Для детального контроля нам понадобится ``kubectl get svc jaeger-query -n istio-system``{{execute T1}}. Прокиним его UI во вне: ``nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &``{{execute T1}}. Перейдём https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com. В интерфейсе нет метриков.
-
 Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage
 
 ![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews.png)
