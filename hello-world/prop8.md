@@ -7,11 +7,11 @@
 ## Подготовка
 !!!Убарать подготовку в скрипты!!!
 Для контроля нам понадобится Keali. Кликаем по вкладке и вводим проль-логин admin/admin. Выбираем Graph, время мониторнга 30 мин.
-![kiali](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_review.png)
+![kiali1](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_review.png)
 `kubectl apply -f /root/istio-1.6.2/samples/bookinfo/virtual-service-ratings-test-abort.yaml`{{execute T1}}
 Мы видем:
-![kiali](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_reviews.png)
-![kiali](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_raiting.png)
+![kiali2](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_reviews.png)
+![kiali3](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_raiting.png)
 
 Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage
 
