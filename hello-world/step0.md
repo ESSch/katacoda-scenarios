@@ -1,5 +1,5 @@
 ## Установка:
-* `/usr/bin/launch.sh && cd /root && /usr/local/bin/istio-install.sh`{{execute T1}}
+* `/usr/local/bin/run.sh`{{execute T1}}
 ** `kubectl wait --for=condition=Ready pod/grafana-54b54568fc-b7kwj -n istio-system`{{execute T1}}
 * `kubectl get pods -n istio-system`{{execute T1}} ожидание
 * `/usr/local/bin/bookinfo.sh`{{execute T1}}

@@ -43,7 +43,6 @@
     ],
     "intro": {
       "text": "intro.md",
-      "code": "/usr/local/bin/run.sh",
       "credits": ""
     },
     "finish": {
