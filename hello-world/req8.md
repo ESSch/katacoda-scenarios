@@ -7,6 +7,7 @@
 Зайдём в Prometheus: https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com
 Зайдём в Grafana: https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com . В ней уже настроен дашборд - выбирем его, щёлкнув по кнопке Home и выбрав дашборд Istio Service Dashboard. Этот дашборд нам ничего не показывает, так как нет метрик от приложения, которые он смог-бы отображать - создадим нагрузку:
 ``
+#stress.sh
 while true; do
   curl -s https://[[HOST_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com/productpage > /dev/null
   echo -n .;
@@ -29,7 +30,27 @@ build_push_update_images.sh 1.7.2
 Добавьте в код с помощью sed обработуку /health_prometheus:
 ``д``
 
-Для Prometheus используется специальный формат: ``name {labels} value``
+Для Prometheus используется специальный Prometheus Exposition Format формат ``name {labels} value``. Зададим метрику:
+``
+    add_health_prometheus.sh 
+
+    @GET
+    @Path("/health")
+    public Response health() {
+        return Response.ok().type(MediaType.APPLICATION_JSON).entity("{\"status\": \"Reviews is healthy\"}").build();
+    }
+
+
+    cat << EOF > health_prometheus.java
+    @GET
+    @Path("/health_prometheus")
+    public Response health_prometheus() {
+        return Response.ok().type(MediaType.APPLICATION_JSON).entity("{\"status\": \"Reviews is healthy\"}").build();
+    }
+    EOF
+    sed ''
+``
+
 
 Добавим в код приложения возможность отдавать метрики в форматах json и prometheus:
 ``
@@ -38,6 +59,10 @@ ls istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/applicat
 ``
 !!!Сделать выбор можду пробами!!!
 Применить `apply.sh`
+`
+
+#update.sh
+`
 ## Задача
 Переключите Proemteus на него и сделайте скриншот для учителя результатов из Grafana.
 ## Сверка результата
