@@ -12,11 +12,19 @@
 Мы видем:
 ![kiali](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_reviews.png)
 ![kiali](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Kiali_abort_raiting.png)
+
 Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage
 
 ![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews.png)
 в нём есть ->reviews->raiting->raiting
 ![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews2.png)
+
+`sed -i 's/value: 100/value: 10/' virtual-service-ratings-test-abort.yaml`
+`kubectl apply -f virtual-service-ratings-test-abort.yaml`
+`for i in 1..10; do echo $i; done;`
+В Kiali мы не увидем, поэтому посмотрим в Prometheus:
+![prom](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Prometheus_err.png)
+![prom](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/Prom_err_detail.png)
 
 Создадим запросы на https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage:
 ``
