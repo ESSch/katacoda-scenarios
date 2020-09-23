@@ -9,11 +9,13 @@
 
 docker -IP- istioctl_register -DNS- virtual-service-ratings-mysql-vm
 ```
-cd samples/bookinfo/src/mysql/
+cd /root/istio/samples/bookinfo/src
+# bash build-services.sh 1.7.0 docker.io/istio
+cd /root/istio/samples/bookinfo/src/mysql
+docker images | grep b_mysql
 docker build . -t b_mysql:1.0
-docker run -d -e MYSQL_ROOT_PASSWORD=123 -p 3306:3306 --net host --name mysql b_mysql:1.0
-docker exec -it mysql ls
-docker exec -it mysql mysql -h 127.0.0.1 -ppassword < mysqldb-init.sql
+docker run -d -e MYSQL_ROOT_PASSWORD=password --net host --name b_mysql b_mysql:1.0
+docker exec -it b_mysql mysql -h 127.0.0.1 -ppassword < mysqldb-init.sql ####
 istioctl register -n vm mysqldb 1.2.3.4 3306
 cd ???
 kubectl apply -f bookinfo/networking/virtual-service-ratings-mysql-vm.yaml
