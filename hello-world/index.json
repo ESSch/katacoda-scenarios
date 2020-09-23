@@ -50,6 +50,7 @@
     },
     "assets": {
       "host01": [
+          {"file": "jaeger-reviews.png", "target": "/tmp"},
           {"file": "run.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "prod.sh", "target": "/tmp/"},
           {"file": "productpage-v1-2.yml", "target": "/tmp/"},
