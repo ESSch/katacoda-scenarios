@@ -1,7 +1,9 @@
 ## Требование
 Публиковать отдельно для каждого компонента метрики в выделенный endpoint в стандартном формате Prometheus exposition format, готовом для приёма системами pull мониторинга в случае использования pull подхода. Для метрик заполнять label: object_id, group_id, service сообразно стандарту мониторинга «Стандарт обеспечения мониторинга АС»
-## История
-Для отслеживани работоспособности приложения, в большинстве случаев, стоит выбирать в качесве системы мониторинга Prometheus, если на то нет оснований. Наше приложение испльзует Istio, в стандартную поставку которого входит Prometeus его визуализация - Grafana. Посмотрим, какие метрики Prometheus сможет нам отдать:
+## Предистория
+Для отслеживани работоспособности приложения, в большинстве случаев, стоит выбирать в качесве системы мониторинга Prometheus, если на то нет оснований. Наше приложение испльзует Istio, в стандартную поставку которого входит Prometeus его визуализация - Grafana. Помогите команде получить аналитику в Prometheus.
+## Подготовка
+Посмотрим, какие метрики Prometheus сможет нам отдать:
 ``nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &``{{execute T1}}
 Зайдём в Prometheus: https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com
 Для визуалаизции созьмём Graphana:
@@ -24,11 +26,19 @@ curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.7.2 sh - # не даёт
 src/build-services.sh 1.7.2 docker.io/istio # https://github.com/istio/istio/tree/master/samples/bookinfo 
 build_push_update_images.sh 1.7.2
 ``
-Нам ещё нужна метрика .... . Для этого разработков попросили сделать энпойнт, но не указали в каком формате. Они его сделали в формате json:
-``curl ...`` {time: ...;}
-Попробуем привязать её:
+
+Нам ещё нужна метрика жизни приложения. Для этого разработков попросили сделать энпойнт, но не указали в каком формате. Они его сделали в формате json и она доступна по адресу `/health`. Её код находится в `/root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java`: ``{{execute T1}}
+``sed -n '165,170p' /root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java``{{execute T1}}
+Добавьте в код с помощью sed обработуку /health_prometheus:
+``д``
 
 Для Prometheus используется специальный формат: ``name {labels} value``
+
+Добавим в код приложения возможность отдавать метрики в форматах json и prometheus:
+``
+ls istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java
+
+``
 ## Задача
 Переключите Proemteus на него и сделайте скриншот для учителя результатов из Grafana.
 ## Сверка результата
