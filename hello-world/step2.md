@@ -8,12 +8,8 @@
 ## Задание
 Откроем Keali и во кладке Graph и namespace=bookinfo видим сервисы. Для
 этого был сделан баннер:
-```
-docker run -it --name test -d --rm -p 9000:9000 python /bin/bash -c "mkdir /static && echo 'app1' > /static/index.html &&python -m http.server 9000 --directory /static;"
-curl localhost:9000/index.html
-```{{execute T1}}
-Один из разработчиков добавить её, как и его просили. Добавим изменение ```kubectl apply -f /tmp/productpage-v1-2.yaml -n bookinfo```{{execute T1}} и отобразим
-его на фронте ```nohup kubectl port-forward svc/prometheus 9090:9090 -n istio-system --address 0.0.0.0 > /tmp/prometheus-pf.log 2>&1 </dev/null &```{{execute T1}}. Посмотрим https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bunner - баннер отображается.
+``docker run -it --name test -d --rm -p 9000:9000 python /bin/bash -c "mkdir /static && echo 'app1' > /static/index.html &&python -m http.server 9000 --directory /static;"``{{execute T1}}  ``curl localhost:9000/index.html``{{execute T1}}.
+Один из разработчиков добавить её, как и его просили. Добавим изменение ```kubectl apply -f /tmp/productpage-v1-2.yaml -n bookinfo```{{execute T1}}. Посмотрим https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/bunner - баннер отображается.
 Возникают вопросы:
 * Что сделал разработчик не так, с точки зрения состава пода?
 * Как это исправить?
