@@ -35,10 +35,5 @@ build_push_update_images.sh 1.1.0
 Для Prometheus используется специальный формат:
 `` ``
 Переключите Proemteus на него и сделайте скриншот для учителя результатов из Grafana.
-
-## TODO
-Добавить Spring Boot Actuator и NodeJS Actuator. Настроить Prometheus на них. Предложить настроить нужные метрики.
-1. endpoint с prometheus exposition format
-2. json-like формат
-3. ссылка про PEF
-4. дэшборд на п. 2, заставляем переделать на п. 1
+## Задача
+## Сверка результата

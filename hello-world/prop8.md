@@ -9,9 +9,10 @@
 
 Для детального контроля нам понадобится ``kubectl get svc jaeger-query -n istio-system``{{execute T1}}. Прокиним его UI во вне: ``nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &``{{execute T1}}. Перейдём https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com. В интерфейсе нет метриков.
 
-Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage->
+Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage
 
 ![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews.png)
+в нём есть ->reviews->raiting->raiting
 ![jaeger-reviews](https://github.com/ESSch/katacoda-scenarios/raw/master/hello-world/assets/jaeger-reviews2.png)
 
 Создадим запросы на https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage:
@@ -21,6 +22,7 @@ while true; do
   sleep 0.5
 done
 ``{{execute T2}}
+
 ## Проведения
 Для эмуляции недоступности ratings версии v1 воспользуемся virtual-service-ratings-test-abort.yaml. Просмотрите содержимое:
 ``cat samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``{{execute T1}}. До применения ``curl http://$(kubectl get svc details -o jsonpath={@.spec.clusterIP}):9080/``{{execute T1}}. Применем ``kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``{{execute T1}}. Изменем колличество непройденных запросов со 100% до 10% в spec.http[].fault.abort.percentage.value с помощью ``sed 's/percent: 100/percent: 10/'``{{execute T1}}.
