@@ -1,34 +1,33 @@
 ## Требование
-Возможность продолжить выполнение незавершенных бизнес-задач с момента отказа внешнего компонента/сервиса в случае наличия бизнес-смысла за счёт идемпотентность вызовов
-## TODO 
+8 Возможность продолжить выполнение незавершенных бизнес-задач с момента отказа внешнего компонента/сервиса в случае наличия бизнес-смысла за счёт идемпотентность вызовов
+## Общее описание 
 Развернуть bookinfo. 400 вносит virtual-service-ratings-test-abort.yaml. Заменить 100% на 10%. Попросить добиться работоспособности за счёт добавления spec.http[].retries
 ## Предистория
 В приложении имеется плавающая ошибка. Пока команда её ищет нужно не отказывать пользователей в обслуживании. Помогите команде добиться от вервиса обработки пользовательского запроса от сервиса.
 ## Подготовка
-Для эмуляции недоступности ratings версии v1 воспользуемся virtual-service-ratings-test-abort.yaml. Просмотрите содержимое:
-``cat samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``. До применения ``curl http://$(kubectl get svc details -o jsonpath={@.spec.clusterIP}):9080/``. Применем ``kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``. 
-и понаблюдаем за ними за ``sed 's/percent: 100/percent: 10/'``{{execute T1}}.
-spec.http[].fault.abort.percentage.value = 10.0
-Посмотрим на Jaeger ``nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &``{{execute T1}}   https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com
+Для контроля нам понадобится Keali.
 
-bookinfo/networking/virtual-service-reviews-90-10.yaml
-Создадим запросы:
+Для детального контроля нам понадобится ``kubectl get svc jaeger-query -n istio-system``{{execute T1}}. Прокиним его UI во вне: ``nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --address 0.0.0.0 > /tmp/jaeger-query-pf.log 2>&1 </dev/null &``{{execute T1}}. Перейдём https://[[HOST_SUBDOMAIN]]-16686-[[KATACODA_HOST]].environments.katacoda.com. В интерфейсе нет метриков.
+
+Посмотрим в интерфейсе на метрики. Для этого обновим страницу приложения https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage и страницу Jaeger и выбирем сервис `ratings`. Просмотрим путь istio-ingressgateway->productpage->productpage->
+
+![jaeger-reviews](assets/jaeger-reviews.png)
+
+Создадим запросы на https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage:
 ``
 while true; do
-  curl -sI https://2886795334-80-elsy05.environments.katacoda.com/productpage | grep HTTP | grep -o -P '[0-9]{3}'
+  curl -sI https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage | grep HTTP | grep -o -P '[0-9]{3}'
   sleep 0.5
 done
 ``{{execute T2}}
-
-kubectl get svc
-kubectl get svc jaeger
-
-
-Добавьте в VirtualService сервиса ratings версии v1 раздел retries:
+## Проведения
+Для эмуляции недоступности ratings версии v1 воспользуемся virtual-service-ratings-test-abort.yaml. Просмотрите содержимое:
+``cat samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``{{execute T1}}. До применения ``curl http://$(kubectl get svc details -o jsonpath={@.spec.clusterIP}):9080/``{{execute T1}}. Применем ``kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml``{{execute T1}}. Изменем колличество непройденных запросов со 100% до 10% в spec.http[].fault.abort.percentage.value с помощью ``sed 's/percent: 100/percent: 10/'``{{execute T1}}.
 
 ## Задача
+Добавьте в VirtualService сервиса ratings версии v1 раздел retries.
 Пропишите spec.http[].retries вместо звёздочек значения, необходимые для работы приложения:
-``
+```
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -44,6 +43,6 @@ spec:
     retries:
       attempts: *
       perTryTimeout: *
-``
+```
 ## Сверка результата.
 Сделайте скриншот из Jaeger, где видно, что были повторы и они закончились успехом.

@@ -24,6 +24,7 @@
       "text": "step5.md"
     },
     {"title": "Step", "text": "req8.md"}, 
+    {"title": "Step", "text": "prop8.md"},
     {"title": "Step", "text": "prop1.md"},
     {"title": "Step 6", "text": "step6.md"},
     {"title": "Step", "text": "req15.md"},
@@ -38,7 +39,6 @@
     {"title": "Step", "text": "prop2.md"},
     {"title": "Step", "text": "prop4.md"},
     {"title": "Step", "text": "prop7.md"},
-    {"title": "Step", "text": "prop8.md"}
   ],
     "intro": {
       "text": "intro.md",
@@ -70,6 +70,19 @@
     }
   },
   "environment": {
+    "showdashboard": true,
+    "dashboards": [{
+      "name": "Bookinfo", "port": 30128
+      }, {
+        "name": "Jaeger", "port": 16686
+      }, {
+        "name": "Prometheus", "port": 9090
+      }, {
+        "name": "Grafana", "port": 3000
+      }, {
+        "name": "Keali", "port": 20001
+      }
+    ],
     "uilayout": "editor-terminal",
     "uisettings": "yaml",
     "uieditorpath": "/root/exercise",
