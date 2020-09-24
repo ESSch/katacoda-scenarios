@@ -16,6 +16,7 @@ cd /root/istio/samples/bookinfo/ && bash build_push_update_images.sh 1.7.2
 Исходные коды сервисов распологаются в `/root/istio/samples/bookinfo/src/`:
 `find /root/istio/samples/bookinfo/src/ -name Dockerfile`{{execute T1}}
 Найти и исправить нерушения в Dockerfile: `find /root/istio/samples/bookinfo/src/ -name Dockerfile -exec cat {} +`{{execute T1}}
+
 ## Сверка результата
 ``
 #В проверку урока

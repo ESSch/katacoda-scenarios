@@ -30,8 +30,9 @@ build_push_update_images.sh 1.7.2
 Добавьте в код с помощью sed обработуку /health_prometheus:
 ``д``
 
-Для Prometheus используется специальный Prometheus Exposition Format формат ``name {labels} value``. Зададим метрику:
+Для Prometheus используется специальный Prometheus Exposition Format формат ``name {labels} value``. Зададим метрику `http_health{object_id="", group_id="", service="reviews"} 1` для эндпойта `/health_prometheus`. Для этого добавьте его к `/health` и настройте на него Prometheus.
 ``
+#В верии 2
     add_health_prometheus.sh 
 
     @GET
@@ -40,15 +41,21 @@ build_push_update_images.sh 1.7.2
         return Response.ok().type(MediaType.APPLICATION_JSON).entity("{\"status\": \"Reviews is healthy\"}").build();
     }
 
+kubectl get svc
+kubectl get svc reviews
+curl ${IP}/health
+curl ${IP}/health_prometheus
 
-    cat << EOF > health_prometheus.java
-    @GET
-    @Path("/health_prometheus")
-    public Response health_prometheus() {
-        return Response.ok().type(MediaType.APPLICATION_JSON).entity("{\"status\": \"Reviews is healthy\"}").build();
-    }
-    EOF
-    sed ''
+cat << EOF > health_prometheus.java
+@GET
+@Path("/health_prometheus")
+public Response health_prometheus() {
+    return Response.ok().type(MediaType.APPLICATION_JSON).entity("{\"status\": \"Reviews is healthy\"}").build();
+}
+EOF
+#http_health{object_id="", group_id="", service="reviews"} 1
+
+sed '163r health_prometheus.java' /root/istio/samples/bookinfo/src/reviews/reviews-application/src/main/java/application/rest/LibertyRestEndpoint.java
 ``
 
 
