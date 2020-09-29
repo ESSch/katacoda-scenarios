@@ -49,6 +49,8 @@
           {"file": "replicaset.rego", "target": "/tmp"},
           {"file": "mtls.rego", "target": "/tmp"},
           {"file": "destination-rule-all-mtls.yaml", "target": "/tmp"},
+          {"file": "retry.rego", "target": "/tmp"},
+          {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"}
       ]
     }

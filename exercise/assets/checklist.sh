@@ -39,7 +39,7 @@ replicasets=$(kubectl -n bookinfo get replicasets -o json | opa eval -f pretty -
 # istioctl get destinationrules -o yaml
 # kubectl get destinationrules -o json
 mtls=$(kubectl -n istio-system get deployments -o json | opa eval -f pretty -I -d /tmp/deployment.rego "data.k8s.deployment.policy")
-
+retry="kubectl get virtualservices -o json" # TODO
 
 print_policy "$deployments"
 print_policy "$pods"
