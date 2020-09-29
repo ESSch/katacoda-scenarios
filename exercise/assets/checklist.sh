@@ -36,9 +36,14 @@ echo -e "\e[0m"
 deployments=$(kubectl -n bookinfo get deployments -o json | opa eval -f pretty -I -d /tmp/deployment.rego "data.k8s.deployment.policy")
 pods=$(kubectl -n bookinfo get pods -o json | opa eval -f pretty -I -d /tmp/pod.rego "data.k8s.pod.policy")
 replicasets=$(kubectl -n bookinfo get replicasets -o json | opa eval -f pretty -I -d /tmp/replicaset.rego "data.k8s.replicaset.policy")
+# istioctl get destinationrules -o yaml
+# kubectl get destinationrules -o json
+mtls=$(kubectl -n istio-system get deployments -o json | opa eval -f pretty -I -d /tmp/deployment.rego "data.k8s.deployment.policy")
+
 
 print_policy "$deployments"
 print_policy "$pods"
 print_policy "$replicasets"
+print_policy "$mtls"
 
 

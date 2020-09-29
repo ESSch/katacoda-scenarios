@@ -47,6 +47,7 @@
           {"file": "deployment.rego", "target": "/tmp"},
           {"file": "pod.rego", "target": "/tmp"},
           {"file": "replicaset.rego", "target": "/tmp"},
+          {"file": "mtls.rego", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"}
       ]
     }
