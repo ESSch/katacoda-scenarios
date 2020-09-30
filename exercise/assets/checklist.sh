@@ -33,9 +33,11 @@ pods=$(kubectl -n bookinfo get pods -o json | opa eval -f pretty -I -d /tmp/pod.
 replicasets=$(kubectl -n bookinfo get replicasets -o json | opa eval -f pretty -I -d /tmp/replicaset.rego "data.k8s.replicaset.policy")
 mtls=$(kubectl get destinationrules -n bookinfo -o json | opa eval -f pretty -I -d /tmp/mtls.rego  "data.k8s.mtls.policy")
 retry=$(kubectl get virtualservices -n bookinfo -o json | opa eval -f pretty -I -d /tmp/retry.rego "data.k8s.retry.policy")
+timeout=$(kubectl get virtualservices -n bookinfo -o json | opa eval -f pretty -I -d /tmp/timeout.rego "data.k8s.retry.policy")
 
 print_policy "$deployments"
 print_policy "$pods"
 print_policy "$replicasets"
 print_policy "$mtls"
 print_policy "$retry"
+print_policy "$timeout"

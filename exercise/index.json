@@ -51,6 +51,7 @@
           {"file": "destination-rule-all-mtls.yaml", "target": "/tmp"},
           {"file": "retry.rego", "target": "/tmp"},
           {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
+          {"file": "timeout.rego", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"}
       ]
     }
