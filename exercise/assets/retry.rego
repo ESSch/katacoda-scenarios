@@ -9,11 +9,12 @@ allow[msg] {
 }
 
 deny[msg] {
-  item := input.items[_]   
+  list := ["details", "productpage", "ratings", "reviews"]
+  host := list[_]
+  item := input.items[_]  
   item.kind == "VirtualService"
-  not item.spec.gateways
-  not item.spec.http[0].retries
-  msg := sprintf("Mtls для сервиса %v выключен", [item.spec.hosts[0]])       
+  host != item.spec.hosts[0]
+  msg := sprintf("Retry не включён как минимум в %v", [host])       
 }
 
 error[{"reason": reason, "item": item}] {
