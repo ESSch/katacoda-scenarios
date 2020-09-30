@@ -4,20 +4,23 @@ allow[msg] {
   item := input.items[_] 
   item.kind == "DestinationRule"                   
   item.spec.trafficPolicy.tls.mode = "ISTIO_MUTUAL" 
-  msg := sprintf("Mtls для сервиса %v включён", [item.spec.host])     
+  msg := sprintf("mTLS для сервиса %v включён", [item.spec.host])     
 }
 
 deny[msg] {
-  item := input.items[_]   
+  list := ["details", "productpage", "ratings", "reviews"]
+  host := list[_]
+  item := input.items[_]  
   item.kind == "DestinationRule"
-  item.spec.trafficPolicy.tls.mode != "ISTIO_MUTUAL" 
-  msg := sprintf("Mtls для сервиса %v выключен", [item.spec.host])       
+  host != item.spec.hosts[0]
+  item.spec.trafficPolicy.tls.mode != "ISTIO_MUTUAL"
+  msg := sprintf("mTLS не включён в %v", [host])       
 }
 
 error[{"reason": reason, "item": item}] {
     item := input.items[_]
     item.kind != "DestinationRule"
-    reason:="Unexpected item.kind"
+    reason:="Unexpected item.kind for mTLS"
 }
 
 policy := { "allow": allow, "deny": deny, "err": error }

@@ -16,7 +16,7 @@ deny[msg] {
   host != item.spec.hosts[0]; #not item.spec.http[0].retries.attempts
   #item.spec.http[_].retries.attempts = 0
   #item.spec.retries > 1
-  msg := sprintf("Retry не включён как минимум в %v", [host])       
+  msg := sprintf("Retry не включён в %v", [host])       
 }
 
 error[{"reason": reason, "item": item}] {
