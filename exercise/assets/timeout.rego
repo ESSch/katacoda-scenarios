@@ -1,11 +1,11 @@
 package k8s.timeout
 
-allow[msg] {                                                                                                           
-  item := input.items[_] 
-  item.kind == "VirtualService"  
+allow[msg] {
+  item := input.items[_]
+  item.kind == "VirtualService"
   not item.spec.gateways
   item.spec.http[_].timeout
-  msg := sprintf("Timeout для сервиса %v включён", [item.spec.hosts[0]])     
+  msg := sprintf("Timeout для сервиса %v включён", [item.spec.hosts[0]])
 }
 
 deny[msg] {

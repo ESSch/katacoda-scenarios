@@ -19,4 +19,10 @@ deny[msg] {
   msg := sprintf("Retry не включён как минимум в %v", [host])       
 }
 
+error[{"reason": reason, "item": item}] {
+    item := input.items[_]
+    item.kind != "VirtualService"
+    reason:="Unexpected item.kind"
+}
+
 policy := { "allow": allow, "deny": deny, "err": error }
