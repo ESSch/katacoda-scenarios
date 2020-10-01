@@ -34,7 +34,7 @@
 
 Проанализируйте настройки сетевого взаимодействия относительно безопасности
 трафика, timeout и retry:
-`kubectl get virtualservices,destinationrules -n bookinfo -o yaml > /root/exercise/istio.yaml`{{execute T1}}. Справочную информацию Вы можите обратиться к документации Istio версии 6.
+`kubectl get virtualservices,destinationrules -n bookinfo -o yaml > /root/exercise/istio.yaml`{{execute T1}}. Справочную информацию Вы можете обратившись к документации Istio версии 6.
 
 ## Хаос-тест
 
