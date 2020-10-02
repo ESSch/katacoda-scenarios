@@ -17,6 +17,7 @@ cd /root/istio/samples/bookinfo/src/
 
 kubectl get pods -n istio-system -o name | xargs -I {} kubectl wait --for=condition=Ready --timeout=120s -n istio-system {}
 
+
 kubectl get svc productpage -n bookinfo -o jsonpath={@.spec.clusterIP} | xargs -I {} curl -I -s -S -L --retry-connrefused --retry 100 --retry-delay 5 {}:9080 
 echo "#### FINISH ####"
 
