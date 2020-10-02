@@ -12,7 +12,7 @@ nohup kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system --addres
 nohup kubectl port-forward svc/kiali 20001:20001 -n istio-system --address 0.0.0.0 > /tmp/kiali-pf.log 2>&1 </dev/null &
 /usr/local/bin/bookinfo.sh
 
-cd /root/ && git clone --branch 1.7.2 https://github.com/istio/istio.git
+cd /root/ && git clone --branch ... https://github.com/istio/istio.git
 cd /root/istio/samples/bookinfo/src/
 
 kubectl get pods -n istio-system -o name | xargs -I {} kubectl wait --for=condition=Ready --timeout=120s -n istio-system {}
