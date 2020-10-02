@@ -2,7 +2,7 @@ apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
   name: "example-peer-policy"
-  namespace: "bookingo"
+  namespace: "istio-system"
 spec:
   selector:
     matchLabels:
@@ -14,7 +14,7 @@ apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
   name: "example-peer-policy"
-  namespace: "bookingo"
+  namespace: "istio-system"
 spec:
   selector:
     matchLabels:
@@ -26,7 +26,7 @@ apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
   name: "example-peer-policy"
-  namespace: "bookingo"
+  namespace: "istio-system"
 spec:
   selector:
     matchLabels:
@@ -38,7 +38,7 @@ apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
   name: "example-peer-policy"
-  namespace: "bookingo"
+  namespace: "istio-system"
 spec:
   selector:
     matchLabels:
