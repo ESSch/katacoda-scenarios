@@ -13,7 +13,8 @@ deny[msg] {
   item := input.items[_]  
   item.kind == "DestinationRule"
   host != item.spec.hosts[0]
-  item.spec.trafficPolicy.tls.mode != "ISTIO_MUTUAL"
+  item.spec.trafficPolicy.tls.mode != "ISTIO_MUTUAL" # TODO
+  
   msg := sprintf("mTLS не включён в %v", [host])       
 }
 

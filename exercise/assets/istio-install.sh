@@ -74,7 +74,9 @@ while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.condi
     sleep 10
 done
 
+kubectl get pods -n istio-system -o name | xargs -I {} kubectl wait --for=condition=Ready --timeout=30s -n istio-system {}
 kubectl get pods -n istio-system
+
 echo "Done."
 
 
