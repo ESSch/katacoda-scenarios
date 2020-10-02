@@ -30,6 +30,7 @@ cat /tmp/destination-rule-all-mtls.yaml | kubectl -n bookinfo apply -f -
 #"productpage"
 #"ratings"
 #"reviews"
+#
 
 echo "Ingress node port: $(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')"
 

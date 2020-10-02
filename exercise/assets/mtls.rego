@@ -18,9 +18,9 @@ deny[msg] {
 }
 
 error[{"reason": reason, "item": item}] {
-    item := input.items[_]
-    item.kind != "DestinationRule"
-    reason:="Unexpected item.kind for mTLS"
+  item := input.items[_]
+  item.kind != "DestinationRule"
+  reason:="Unexpected item.kind for mTLS"
 }
 
 policy := { "allow": allow, "deny": deny, "err": error }
