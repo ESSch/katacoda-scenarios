@@ -20,7 +20,7 @@ kubectl get nodes -o json | grep master | grep '"key": "node-role.kubernetes.io/
 if [ $? -eq 0 ]
 then
     kubectl taint nodes controlplane node-role.kubernetes.io/master-
-if
+fi
 kubectl get nodes -o json | jq .items[].spec.taints
 
 # install opa
