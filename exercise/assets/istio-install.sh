@@ -65,7 +65,6 @@ kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/immuta
 kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/traffic-policy.yaml)"
 kubectl -n istio-system patch deployment istio-ingressgateway -p "$(cat /tmp/antiaffinity.yaml)"
 
-
 kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=2
 while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]; do 
     echo "Scaling up istio-ingressgateway...."
@@ -77,7 +76,22 @@ kubectl get pods -n istio-system
 echo "### An Istio have been starting ###"
 
 export PATH_ISTIO=/root/istio-1.6.2
+export ISTIO_VERSION=1.6.2
 istioctl version
+
+cat <<EOF | kubectl create -f -
+{
+  "apiVersion": "v1",
+  "kind": "Namespace",
+  "metadata": {
+    "name": "bookinfo",
+    "labels": {
+      "name": "bookinfo",
+      "istio-injection": "enabled"
+    }
+  }
+}
+EOF
 
 echo "Done."
 
