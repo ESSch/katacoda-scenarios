@@ -17,7 +17,7 @@ kubectl get pods --all-namespaces
 # untaint control plane
 echo "# Taint"
 kubectl get nodes -o json | grep master | grep '"key": "node-role.kubernetes.io/master"'
-if [$? -eq 0]
+if [ $? -eq 0 ]
 then
     kubectl taint nodes controlplane node-role.kubernetes.io/master-
 if
