@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cat /tmp/bookinfo-no-deployment.yaml | kubectl -n bookinfo apply -f -
 cat $HOME/istio-1.6.2/samples/bookinfo/networking/bookinfo-gateway.yaml | kubectl -n bookinfo apply -f - 
