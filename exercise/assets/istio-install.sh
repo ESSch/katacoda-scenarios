@@ -14,9 +14,14 @@ done
 
 kubectl get pods --all-namespaces
 
-
 # untaint control plane
-kubectl taint nodes --all node-role.kubernetes.io/master-
+echo "# Taint"
+kubectl get nodes -o json | grep master | grep '"key": "node-role.kubernetes.io/master"'
+if [$? -eq 0]
+then
+    kubectl taint nodes controlplane node-role.kubernetes.io/master-
+if
+kubectl get nodes -o json | jq .items[].spec.taints
 
 # install opa
 curl -sS -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
