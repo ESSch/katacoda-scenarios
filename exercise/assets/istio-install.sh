@@ -49,8 +49,6 @@ while [ "$(kubectl get pods -l app!=katacoda-cloud-provider -n kube-system -o=js
     sleep 10
 done
 
-
-
 istioctl install --set profile=demo --readiness-timeout='10m0s'
 sleep 10
 
