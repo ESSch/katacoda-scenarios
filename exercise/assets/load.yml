@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bookinfo
+spec:
+  template:
+    spec:
+      containers:
+      - name: load
+        image: k8s.gcr.io/busybox
+        command: ["/bin/sh",  "-c", "ls /etc/config && ls /root"]
+        volumeMounts:
+        - name: load
+          mountPath: /etc/config
+        - name: kube
+          mountPath: /root
+      volumes:
+        - name: load
+          configMap:
+            name: load
+        - name: kube
+          configMap:
+            name: kube
+      restartPolicy: Never
+  backoffLimit: 4
+# kubectl create configmap bookinfo --from-file=/usr/local/bin/bookinfo.sh
+# kubectl create configmap kube --from-file=${HOME}/.kube/config
+# kubectl apply -n bookinfo -f bookinfo.yaml
+# kubectl logs

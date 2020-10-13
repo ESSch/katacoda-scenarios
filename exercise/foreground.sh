@@ -1,6 +1,6 @@
 #!/bin/bash
 
-check="\e[1;32m✔\e[0m"
+check="✔"
 launch.sh &
 
 echo "Load kubernetes..."
@@ -20,7 +20,7 @@ echo "$check"
 echo "Start pods..."
 for i in {1..100}
 do
-    if [ $(kubectl get pods --all-namespaces | wc -l) -ge 9 ]
+    if [ $(kubectl get pods --all-namespaces | wc -l ) -ge 9 ]
     then
         break;
     else
@@ -31,4 +31,18 @@ done
 echo "";
 echo "$check"
 
-kubectl get pods $i -n kube-system
+echo "Start pods..."
+for i in {1..100}
+do
+    if [ $(kubectl get pods --all-namespaces | grep Running | wc -l) -ge 8 ]
+    then
+        break;
+    else
+        echo -n "."
+        sleep .2
+    fi
+done 
+echo "";
+echo "$check"
+
+kubectl get pods --all-namespaces
