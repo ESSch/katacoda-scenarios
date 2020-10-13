@@ -7,7 +7,10 @@ do
     kubectl get pods --all-namespaces | wc -l > /dev/null
     if [ $? -eq 0 ]
     then
-        continue
+        break;
+    else
+        echo -n "."
+        sleep .2
     fi
 done 
 
@@ -20,7 +23,7 @@ do
         for a in {1..100}
         do
             echo -n "."
-            sleep 1
+            sleep .2
             kubectl get pods $i -n kube-system | grep -v NAME | grep Running > /dev/null
             if [ $? -eq 0 ]
             then
