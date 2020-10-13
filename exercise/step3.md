@@ -9,7 +9,7 @@
 `kubectl create -n bookinfo configmap kube --from-file=${HOME}/.kube/config`{{execute T1}}
 `kubectl apply -n bookinfo -f /usr/local/bin/bookinfo.sh`{{execute T1}}
 
-Вывод эмулятора нагрузки можно посмотреть во вкладке `Logs`
+!!Вывод эмулятора нагрузки можно посмотреть во вкладке!! События эмулятора нагрузки можно посмотреть во вкладке `Logs`
 
 ## Изучите топологию приложения в динамике
 
