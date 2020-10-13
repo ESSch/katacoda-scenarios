@@ -8,6 +8,8 @@ spec:
       containers:
       - name: bookinfo
         image: ubuntu
-        command: ["bash",  ""]
+        command: ["bash ",  ""]
       restartPolicy: Never
   backoffLimit: 4
+# kubectl create configmap bookinfo --from-file=/usr/local/bin/bookinfo.sh
+# kubectl apply -n ???? -f bookinfo.yaml

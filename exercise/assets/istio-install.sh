@@ -1,4 +1,5 @@
 #!/bin/sh
+check="\e[1;32m✔\e[0m"
 
 # kubectl get pods --all-namespaces
 while [ "$(kubectl get pods --all-namespaces)" = "No resources found" ]; do 
@@ -15,11 +16,10 @@ done
 kubectl get pods --all-namespaces
 
 # untaint control plane
-echo "# Taint"
 kubectl get nodes -o json | grep master | grep '"key": "node-role.kubernetes.io/master"' > /dev/null
 if [ $? -eq 0 ]
 then
-    kubectl taint nodes controlplane node-role.kubernetes.io/master-
+    echo "# Taint $(kubectl taint nodes controlplane node-role.kubernetes.io/master-)"
 fi
 # kubectl get nodes -o json | jq .items[].spec.taints
 
@@ -69,7 +69,7 @@ kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/node-p
 kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/immutable-ports.yaml)"  > /dev/null && \
 kubectl -n istio-system patch service istio-ingressgateway -p "$(cat /tmp/traffic-policy.yaml)" > /dev/null && \
 kubectl -n istio-system patch deployment istio-ingressgateway -p "$(cat /tmp/antiaffinity.yaml)" > /dev/null && \
-echo " ✔ Done."
+echo "$check Ingress gateway setting"
 
 kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=2
 while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]; do 
@@ -99,18 +99,24 @@ cat <<EOF | kubectl create -f -
 }
 EOF
 
-check="\e[1;32m✔\e[0m"
+# Kiali
 
-kubectl -n istio-system patch service kiali -p "$(cat /tmp/node-port.yaml)"
-kubectl -n istio-system patch --type="merge" service kiali -p "$(cat /tmp/immutable-port-kiali.yaml)"
-echo "$check Kiali started"
+kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=2
+while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]; do 
+    echo "Scaling up istio-ingressgateway...."
+    sleep 10
+done
 
-kubectl -n istio-system patch service tracing -p "$(cat /tmp/node-port.yaml)"
-kubectl -n istio-system patch --type="merge" service tracing -p "$(cat /tmp/immutable-port-jaeger.yaml)"
-echo "$check Tracing started"
+kubectl -n istio-system patch service kiali -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
+kubectl -n istio-system patch --type="merge" service kiali -p "$(cat /tmp/immutable-port-kiali.yaml)" > /dev/null && \
+echo "$check Kiali exposed"
 
-kubectl -n istio-system patch service grafana -p "$(cat /tmp/node-port.yaml)"
-kubectl -n istio-system patch --type="merge" service grafana -p "$(cat /tmp/immutable-port-grafana.yaml)"
-echo "$check Grafana started"
+kubectl -n istio-system patch service tracing -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
+kubectl -n istio-system patch --type="merge" service tracing -p "$(cat /tmp/immutable-port-jaeger.yaml)" > /dev/null && \
+echo "$check Tracing exposed"
+
+kubectl -n istio-system patch service grafana -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
+kubectl -n istio-system patch --type="merge" service grafana -p "$(cat /tmp/immutable-port-grafana.yaml)" > /dev/null && \
+echo "$check Grafana exposed"
 
 echo "\e[1;32m✔\e[0m Istio have been installed."
