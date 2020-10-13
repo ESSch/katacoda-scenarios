@@ -2,6 +2,9 @@
 
 source launch.sh
 PID=$$
+
+exit
+
 for i in {1..200}
 do
     echo -n "."
