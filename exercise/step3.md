@@ -10,9 +10,7 @@
 
 ## Изучите топологию приложения в динамике
 
-Выполните следующую команду, чтобы сделать доступным Kiali в браузере `nohup kubectl port-forward svc/kiali 20001:20001 -n istio-system --address 0.0.0.0 > /tmp/kiali-pf.log 2>&1 </dev/null &`{{execute T1}}
-
-Откройте Kiali в браузере https://[[HOST_SUBDOMAIN]]-20001-[[KATACODA_HOST]].environments.katacoda.com
+Выполните следующую команду, чтобы сделать доступным Kiali в браузере https://[[HOST_SUBDOMAIN]]-20001-[[KATACODA_HOST]].environments.katacoda.com
 
 Логин/пароль для входа в Kiali `admin/admin`
 

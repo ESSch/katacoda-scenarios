@@ -53,7 +53,12 @@
           {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
           {"file": "timeout.rego", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"}
+          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "node-port.yaml", "target": "/tmp"},
+          {"file": "immutable-ports.yaml", "target": "/tmp"},
+          {"file": "immutable-port-kiali.yaml", "target": "/tmp"},
+          {"file": "immutable-port-grafana.yaml", "target": "/tmp"},
+          {"file": "immutable-port-jaeger.yaml", "target": "/tmp"}
       ]
     }
   },
