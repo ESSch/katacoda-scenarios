@@ -101,12 +101,6 @@ EOF
 
 # Kiali
 
-kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=2
-while [ "$(kubectl get pods -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]; do 
-    echo "Scaling up istio-ingressgateway...."
-    sleep 10
-done
-
 kubectl -n istio-system patch service kiali -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
 kubectl -n istio-system patch --type="merge" service kiali -p "$(cat /tmp/immutable-port-kiali.yaml)" > /dev/null && \
 echo "$check Kiali exposed"
