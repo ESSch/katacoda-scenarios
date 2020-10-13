@@ -1,6 +1,6 @@
 #!/bin/bash
 
-launch.sh
+source launch.sh
 
 for i in "$(kubectl get pods -n kube-system -o json | jq -r '.items[].metadata.name')"; 
 do
