@@ -1,6 +1,16 @@
 #!/bin/bash
 
 source launch.sh
+PID=$$
+for i in {1..200}
+do
+    echo -n "."
+    sleep .2
+    if [ ps $PID | grep -v PID ]
+    then
+        break
+    fi
+done
 
 for i in {1..100}
 do
