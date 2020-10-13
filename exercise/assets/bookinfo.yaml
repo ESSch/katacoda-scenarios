@@ -7,13 +7,13 @@ spec:
     spec:
       containers:
       - name: bookinfo
-        image: k8s.gcr.io/busybox
-        command: ["/bin/sh",  "-c", "ls /etc/config && ls /root"]
+        image: bitnami/kubectl:latest
+        command: ["/bin/sh",  "-c", "ls /etc/config && ls /.kube"]
         volumeMounts:
         - name: bookinfo
           mountPath: /etc/config
         - name: kube
-          mountPath: /root
+          mountPath: /.kube
       volumes:
         - name: bookinfo
           configMap:

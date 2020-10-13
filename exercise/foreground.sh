@@ -18,9 +18,9 @@ echo "";
 echo "$check"
 
 echo "Start pods..."
-for i in {1..100}
+for i in {1..500}
 do
-    if [ $(kubectl get pods --all-namespaces | wc -l ) -ge 9 ]
+    if [ "$(kubectl get pods --all-namespaces 2>/dev/null | wc -l )" -ge 9 ]
     then
         break;
     else
@@ -32,9 +32,9 @@ echo "";
 echo "$check"
 
 echo "Start pods..."
-for i in {1..100}
+for i in {1..500}
 do
-    if [ $(kubectl get pods --all-namespaces | grep Running | wc -l) -ge 8 ]
+    if [ "$(kubectl get pods --all-namespaces 2>/dev/null | grep Running | wc -l)" -ge 8 ]
     then
         break;
     else

@@ -71,8 +71,8 @@
     "uisettings": "yaml",
     "uieditorpath": "/root/exercise",
     "terminals": [
-      {"name": "Logs_bookinfo", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp -n bookinfo"},
-      {"name": "Logs_common", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"}
+      {"name": "Events of bookinfo", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp -n bookinfo"},
+      {"name": "Events of common", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"}
     ]
   },
   "backend": {
