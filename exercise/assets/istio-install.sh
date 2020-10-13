@@ -99,13 +99,18 @@ cat <<EOF | kubectl create -f -
 }
 EOF
 
+check="\e[1;32m✔\e[0m"
+
 kubectl -n istio-system patch service kiali -p "$(cat /tmp/node-port.yaml)"
 kubectl -n istio-system patch --type="merge" service kiali -p "$(cat /tmp/immutable-port-kiali.yaml)"
+echo "$check Kiali started"
 
 kubectl -n istio-system patch service tracing -p "$(cat /tmp/node-port.yaml)"
 kubectl -n istio-system patch --type="merge" service tracing -p "$(cat /tmp/immutable-port-jaeger.yaml)"
+echo "$check Tracing started"
 
 kubectl -n istio-system patch service grafana -p "$(cat /tmp/node-port.yaml)"
 kubectl -n istio-system patch --type="merge" service grafana -p "$(cat /tmp/immutable-port-grafana.yaml)"
+echo "$check Grafana started"
 
 echo "\e[1;32m✔\e[0m Istio have been installed."
