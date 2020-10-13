@@ -35,7 +35,7 @@
 трафика, timeout и retry:
 `kubectl get virtualservices,destinationrules -n bookinfo -o yaml > /root/exercise/istio.yaml`{{execute T1}}. 
 
-исправьте ошибки и примените (kubectl apply -n bookinfo -f /root/exercise/{NAME_FILE}.yaml
+Исправьте ошибки и примените (kubectl apply -n bookinfo -f /root/exercise/{NAME_FILE}.yaml
 
 ## Исправьте проблемы
 
