@@ -68,8 +68,7 @@
     "uieditorpath": "/root/exercise",
     "terminals": [
       {"name": "PF_Kiali", "target": "host01", "command": "tail -F /tmp/kiali-pf.log"},
-      {"name": "EMU_Load", "target": "host01", "command": "tail -F /tmp/load.log"},
-      {"name": "ChaosTest", "target": "host01", "command": "tail -F /tmp/chaos.log"}
+      {"name": "EMU_Load", "target": "host01", "command": "tail -F /tmp/load.log"}
     ]
   },
   "backend": {

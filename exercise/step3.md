@@ -10,9 +10,7 @@
 
 ## Изучите топологию приложения в динамике
 
-Выполните следующую команду, чтобы сделать доступным Kiali в браузере https://[[HOST_SUBDOMAIN]]-20001-[[KATACODA_HOST]].environments.katacoda.com
-
-Логин/пароль для входа в Kiali `admin/admin`
+Выполните следующую команду, чтобы сделать доступным Kiali в браузере https://[[HOST_SUBDOMAIN]]-31546-[[KATACODA_HOST]].environments.katacoda.com. Для входа в Kiali логин/пароль: `admin/admin`.
 
 ## Изучите дескрипторы основных объектов приложения
 

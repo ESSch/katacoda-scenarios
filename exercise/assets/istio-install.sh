@@ -113,4 +113,4 @@ kubectl -n istio-system patch service grafana -p "$(cat /tmp/node-port.yaml)" > 
 kubectl -n istio-system patch --type="merge" service grafana -p "$(cat /tmp/immutable-port-grafana.yaml)" > /dev/null && \
 echo "$check Grafana exposed"
 
-echo "\e[1;32m✔\e[0m Istio have been installed."
+echo "$check Istio have been installed."
