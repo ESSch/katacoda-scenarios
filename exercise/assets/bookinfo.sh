@@ -11,7 +11,7 @@ for (( i=1; i<=1000; i++ ))
 do 
   echo -n "."; 
   sleep .2;
-  kubectl get svc productpage -n bookinfo -o jsonpath={@.spec.clusterIP} 2>/dev/null | xargs -I {} curl -I -s -S -L --retry-connrefused --retry 100 --retry-delay 5 {}:9080
+  kubectl get svc productpage -n bookinfo -o jsonpath={@.spec.clusterIP} 2>/dev/null | xargs -I {} curl -I -s -S -L {}:9080
   if [ $? -eq 0 ]
   then
     break

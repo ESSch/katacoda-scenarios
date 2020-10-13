@@ -4,7 +4,7 @@ source launch.sh
 
 for i in {1..100}
 do
-    if [ $(kubectl get pods --all-namespaces | wc -l) == 13 ]
+    if [ $(kubectl get pods --all-namespaces | wc -l) -ge 8 ]
     then
         break;
     else
@@ -12,6 +12,8 @@ do
         sleep .2
     fi
 done 
+
+kubectl get pods $i -n kube-system
 
 for i in "$(kubectl get pods -n kube-system -o json | jq -r '.items[].metadata.name')"; 
 do
