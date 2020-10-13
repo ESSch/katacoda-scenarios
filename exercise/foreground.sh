@@ -4,8 +4,7 @@ source launch.sh
 
 for i in {1..100}
 do
-    kubectl get pods --all-namespaces | wc -l > /dev/null
-    if [ $? -eq 0 ]
+    if [ $(kubectl get pods --all-namespaces | wc -l) == 13 ]
     then
         break;
     else
