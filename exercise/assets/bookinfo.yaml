@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bookinfo
+spec:
+  template:
+    spec:
+      containers:
+      - name: bookinfo
+        image: ubuntu
+        command: ["bash",  ""]
+      restartPolicy: Never
+  backoffLimit: 4
