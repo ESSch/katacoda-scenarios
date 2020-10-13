@@ -2,9 +2,8 @@
 
 check="\e[1;32m✔\e[0m"
 launch.sh &
-PID=$$
-ps $PID | grep -v PID
 
+echo "Load kubernetes..."
 for i in {1..300}
 do
     echo -n "."
@@ -33,25 +32,3 @@ echo "";
 echo "$check"
 
 kubectl get pods $i -n kube-system
-
-for i in "$(kubectl get pods -n kube-system -o json | jq -r '.items[].metadata.name')"; 
-do
-    kubectl get pods $i -n kube-system | grep -v NAME | grep Running > /dev/null
-    if [ $? -ne 0 ]
-    then
-        echo "$i is starging..."
-        for a in {1..100}
-        do
-            echo -n "."
-            sleep .2
-            kubectl get pods $i -n kube-system | grep -v NAME | grep Running > /dev/null
-            if [ $? -eq 0 ]
-            then
-                continue;
-            fi
-        done
-    else 
-        kubectl get pods $i -n kube-system | grep -v NAME | grep Running
-    fi
-done
-echo "";
