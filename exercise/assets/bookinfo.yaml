@@ -7,9 +7,16 @@ spec:
     spec:
       containers:
       - name: bookinfo
-        image: ubuntu
-        command: ["bash ",  ""]
+        image: k8s.gcr.io/busybox
+        command: ["/bin/sh",  "-c", "ls /etc/config"]
+        volumeMounts:
+        - name: bookinfo
+          mountPath: /etc/config
+      volumes:
+        - name: bookinfo
+          configMap:
+            name: bookinfo
       restartPolicy: Never
   backoffLimit: 4
 # kubectl create configmap bookinfo --from-file=/usr/local/bin/bookinfo.sh
-# kubectl apply -n ???? -f bookinfo.yaml
+# kubectl apply -n bookinfo -f bookinfo.yaml
