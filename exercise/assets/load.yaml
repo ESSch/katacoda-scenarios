@@ -5,6 +5,7 @@ metadata:
 spec:
   template:
     spec:
+      hostNetwork: true
       containers:
       - name: load
         image: bitnami/kubectl:latest
