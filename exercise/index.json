@@ -75,6 +75,7 @@
       {"name": "Events of common",   "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"},
       {"name": "Logs of load",       "target": "host01", "command": "kubectl logs $(kubectl get pods -l job-name=load -n default -o jsonpath={@.items..metadata.name}) -n default -c load -f"}
     ],
+    "showdashboard": true,
     "dashboards": [{
       "name": "Bookinfo", "href": "https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage", "uilayout": "terminal-iframe"
     }, {
