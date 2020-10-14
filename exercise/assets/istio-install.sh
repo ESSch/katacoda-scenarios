@@ -59,7 +59,8 @@ sleep 10
 
 # scale down istio ingress, fix infinity
 kubectl -n istio-system scale deployment istio-ingressgateway  --replicas=0
-for (( c=1; c < 10 && "$(kubectl get pods -l app=istio-ingressgateway -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != ""; c++ )) 
+#for (( c=1; c < 10 && 
+while [ "$(kubectl get pods -l app=istio-ingressgateway -n istio-system -o=jsonpath='{.items[*].status.conditions[?(@.status == "False")].status}')" != "" ]
 do 
     echo "Scaling down istio-ingressgateway...."
     sleep 10
