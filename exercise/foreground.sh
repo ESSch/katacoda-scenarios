@@ -1,6 +1,6 @@
 #!/bin/bash
 
-check="✔"
+check="\e[1;32m✔\e[0m"
 launch.sh &
 
 echo -n "Load kubernetes..."
