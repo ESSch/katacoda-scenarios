@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: bookinfo
+  name: load
 spec:
   template:
     spec:
       containers:
       - name: load
-        image: k8s.gcr.io/busybox
-        command: ["/bin/sh",  "-c", "ls /etc/config && ls /root"]
+        image: bitnami/kubectl:latest
+        command: ["/bin/sh", "-c", "sleep 3600"]
         volumeMounts:
         - name: load
           mountPath: /etc/config

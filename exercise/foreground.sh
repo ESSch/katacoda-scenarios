@@ -3,7 +3,7 @@
 check="✔"
 launch.sh &
 
-echo "Load kubernetes..."
+echo -n "Load kubernetes..."
 for i in {1..300}
 do
     echo -n "."
@@ -15,9 +15,9 @@ do
     fi
 done
 echo "";
-echo "$check"
+echo "$check Kubernetes loaded"
 
-echo "Start pods..."
+echo -n "Start pods..."
 for i in {1..500}
 do
     if [ "$(kubectl get pods --all-namespaces 2>/dev/null | wc -l )" -ge 9 ]
@@ -29,9 +29,9 @@ do
     fi
 done 
 echo "";
-echo "$check"
+echo "$check Pods started"
 
-echo "Start pods..."
+echo -n "Start pods..."
 for i in {1..500}
 do
     if [ "$(kubectl get pods --all-namespaces 2>/dev/null | grep Running | wc -l)" -ge 8 ]
@@ -43,6 +43,6 @@ do
     fi
 done 
 echo "";
-echo "$check"
+echo "$check Pods started"
 
 kubectl get pods --all-namespaces

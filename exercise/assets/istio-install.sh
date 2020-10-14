@@ -103,14 +103,14 @@ EOF
 
 kubectl -n istio-system patch service kiali -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
 kubectl -n istio-system patch --type="merge" service kiali -p "$(cat /tmp/immutable-port-kiali.yaml)" > /dev/null && \
-echo "$check Kiali exposed"
+echo -e "$check Kiali exposed"
 
 kubectl -n istio-system patch service tracing -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
 kubectl -n istio-system patch --type="merge" service tracing -p "$(cat /tmp/immutable-port-jaeger.yaml)" > /dev/null && \
-echo "$check Tracing exposed"
+echo -e "$check Tracing exposed"
 
 kubectl -n istio-system patch service grafana -p "$(cat /tmp/node-port.yaml)" > /dev/null && \
 kubectl -n istio-system patch --type="merge" service grafana -p "$(cat /tmp/immutable-port-grafana.yaml)" > /dev/null && \
-echo "$check Grafana exposed"
+echo -e "$check Grafana exposed"
 
-echo "$check Istio have been installed."
+echo -e "$check Istio have been installed."
