@@ -15,7 +15,7 @@ do
     fi
 done
 echo "";
-echo "$check Kubernetes loaded"
+echo -e "$check Kubernetes loaded"
 
 echo -n "Start pods..."
 for i in {1..500}
@@ -29,7 +29,7 @@ do
     fi
 done 
 echo "";
-echo "$check Pods started"
+echo -e "$check Pods started"
 
 echo -n "Start pods..."
 for i in {1..500}
@@ -43,6 +43,6 @@ do
     fi
 done 
 echo "";
-echo "$check Pods started"
+echo -e "$check Pods started"
 
 kubectl get pods --all-namespaces
