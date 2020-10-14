@@ -41,4 +41,5 @@
 
 1. Исправьте проблемы в файлах объектов приложения
 1. Повторно запустите автоматические CloudNative проверки `checklist.sh`{{execute T1}} для самоконтроля.
-1. Отправьте архив с файлами вашего решения вашему ментор для проверки. Создать `/usr/local/bin/create.sh`{{execute T1}} качать архив http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/exercise.tar.
+1. Отправьте архив с файлами вашего решения вашему ментор для проверки. Для получения архива создайте его командой `/usr/local/bin/create.sh`{{execute T1}} и, после создания, скачав по ссылке http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/exercise.tar.
+ 
