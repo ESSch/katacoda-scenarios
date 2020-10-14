@@ -24,7 +24,3 @@ spec:
             name: kube
       restartPolicy: Never
   backoffLimit: 4
-# kubectl create configmap bookinfo --from-file=/usr/local/bin/bookinfo.sh
-# kubectl create configmap kube --from-file=${HOME}/.kube/config
-# kubectl apply -n bookinfo -f bookinfo.yaml
-# kubectl logs
