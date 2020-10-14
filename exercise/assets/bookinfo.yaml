@@ -8,12 +8,18 @@ spec:
       containers:
       - name: bookinfo
         image: bitnami/kubectl:latest
-        command: ["/bin/sh",  "-c", "ls /etc/config && ls /.kube"]
+        command: ["/bin/sh",  "-c", "sleep 3600"]
         volumeMounts:
         - name: bookinfo
           mountPath: /etc/config
         - name: kube
           mountPath: /.kube
+        - name: deployment
+          mountPath: /tmp
+        - name: mtls
+          mountPath: /tmp
+        - name: gateway
+          mountPath: /istio-1.6.2/samples/bookinfo/networking/
       volumes:
         - name: bookinfo
           configMap:
@@ -21,6 +27,15 @@ spec:
         - name: kube
           configMap:
             name: kube
+        - name: deployment
+          configMap:
+            name: deployment
+        - name: mtls
+          configMap:
+            name: mtls
+        - name: gateway
+          configMap:
+            name: gateway
       restartPolicy: Never
   backoffLimit: 4
 # kubectl create configmap bookinfo --from-file=/usr/local/bin/bookinfo.sh
