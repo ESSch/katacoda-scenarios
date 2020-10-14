@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker ps | grep tar && docker rm -f tar
+docker ps | grep tar && docker rm -f tar && echo "✔ Old archive deleted"
 tar -cvf /tmp/exercise.tar /root/exercise && \
 docker run \
   --name tar \
