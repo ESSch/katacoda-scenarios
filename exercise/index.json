@@ -72,7 +72,8 @@
     "uieditorpath": "/root/exercise",
     "terminals": [
       {"name": "Events of bookinfo", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp -n bookinfo"},
-      {"name": "Events of common", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"}
+      {"name": "Events of common",   "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"},
+      {"name": "Logs of load",       "target": "host01", "command": "kubectl logs $(kubectl get pods -l job-name=load -n default -o jsonpath={@.items..metadata.name}) -n default -c load -f"}
     ]
   },
   "backend": {
