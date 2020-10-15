@@ -9,6 +9,5 @@ docker run \
   -v /tmp/exercise.tar:/usr/share/nginx/html/exercise.tar:ro \
   nginx &&  \
 echo "Arhive creating..." && sleep 5 && \
-curl -I localhost:9000/exercise.tar &>/dev/null && \
 echo "✔ Archive created"
 
