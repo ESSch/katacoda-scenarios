@@ -79,7 +79,7 @@
     "dashboards": [{
       "name": "Bookinfo", "href": "https://[[HOST_SUBDOMAIN]]-30128-[[KATACODA_HOST]].environments.katacoda.com/productpage", "uilayout": "terminal-iframe"
     }, {
-      "name": "Keali", "port": 31546, "uilayout": "terminal-iframe"
+      "name": "Kiali", "port": 31546, "uilayout": "terminal-iframe"
     }]
   },
   "backend": {
