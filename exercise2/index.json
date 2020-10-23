@@ -5,7 +5,7 @@
   "time": "30 minutes",
   "details": {
     "steps": [{
-        "title": "Подготовить учебный кластер",
+        "title": "Изучеть средства управления доступностью",
         "text": "step_probe.md",
         "verify": "step1-verify.sh"
       }, {
