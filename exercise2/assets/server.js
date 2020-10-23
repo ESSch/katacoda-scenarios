@@ -15,3 +15,6 @@ app.get("/", function(req, res) {
 //     res.status(status);
 //     res.send("Ok");
 // });
+app.listen(9000, function () {
+    console.log("Start");
+});
