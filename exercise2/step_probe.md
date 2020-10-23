@@ -18,12 +18,10 @@
 3. Выполните формальные соответствие требованиям RA-2.10 и RA-3.10 
 
 ### Проверка выполнения RA-2.10
-Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь
-при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
+Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 ### Проверка выполнения RA-3.10
-Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь
-при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
+Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 ## Обеспечение фактического соответствия CloudNative
 Проверка выполнения RN-2.2. Сейчас при удалении статического файла эндпойнт liveness отвечает успехом, что приводит к 
