@@ -10,7 +10,7 @@ app.get("/", function(req, res) {
 //     res.status(status);
 //     res.send("Ok");
 // });
-// app.get("/readness", function(req, res) {
+// app.get("/readiness", function(req, res) {
 //     const status = 200;
 //     res.status(status);
 //     res.send("Ok");

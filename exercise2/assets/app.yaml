@@ -22,6 +22,18 @@ spec:
       - image: node:8
         name: node
         resources: {}
+        livenessProbe:
+            httpGet:
+                path: /liveness
+                port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+        livenessProbe:
+            httpGet:
+                path: /readiness
+                port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 status: {}
 
 ---
