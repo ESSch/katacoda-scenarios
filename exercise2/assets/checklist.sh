@@ -23,8 +23,10 @@ CloudNative checklist
 EOF
 echo -e "\e[0m"
 
-readiness=$(kubectl get deployments -o json | opa eval -f pretty -I -d /tmp/readiness.rego "data.k8s")
-liveness=$(kubectl  get deployments -o json | opa eval -f pretty -I -d /tmp/liveness.rego "data.k8s")
+readiness=$(kubectl get deployments -o json | opa eval -f pretty -I -d /tmp/k8s_probes_readiness.rego "data.k8s")
+liveness=$(kubectl  get deployments -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego "data.k8s")
 
-print_policy "$readiness"
-print_policy "$liveness"
+# print_policy "$readiness"
+# print_policy "$liveness"
+echo $readiness
+echo $liveness
