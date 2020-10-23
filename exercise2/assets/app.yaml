@@ -1,0 +1,27 @@
+# kubectl create deployment app --image node:8 --dry-run='client' -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app
+    spec:
+      containers:
+      - image: node:8
+        name: node
+        resources: {}
+status: {}
+
+---
