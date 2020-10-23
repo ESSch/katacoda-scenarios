@@ -59,7 +59,8 @@
           {"file": "immutable-ports.yaml", "target": "/tmp"},
           {"file": "immutable-port-kiali.yaml", "target": "/tmp"},
           {"file": "immutable-port-grafana.yaml", "target": "/tmp"},
-          {"file": "immutable-port-jaeger.yaml", "target": "/tmp"}
+          {"file": "immutable-port-jaeger.yaml", "target": "/tmp"},
+          {"file": "server.js", "target": "/root/exercise"}
       ]
     }
   },
