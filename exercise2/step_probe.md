@@ -6,22 +6,19 @@
 >     1. 16 RA-2.10 Публиковать информацию о жизнеспособности каждого компонента через liveness endpoint
 >     1. 19 RN-2.2  Настроить liveness probe в оркестраторе на liveness endpoint
 >     1. 20 NE-3.3  Настроить readiness probe в оркестраторе на readiness endpoint
->     1. 21 NE-3.4  Настроить startup probe в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.      
+>     1. 21 NE-3.4  Настроить startup probe в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.
 
 ## Поднимите окружение
 Перед Вами тестовое окружение. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get -f /root/exercise/app.yaml`, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
 
 ## Проверка на формальное соответствие CloudNative
-
 1. Запустите `checklist.sh`{{execute T1}}, для выполнения автоматизированных rego проверок (см. файл checklist.rego).
 2. Определите на основании проверки отклонения от стандарта.
-3. Выполните формальные соответствие требованиям RA-2.10 и RA-3.10 
+3. Выполните формальные соответствие требованиям RA-2.10 и RA-3.10: 
 
-### Проверка выполнения RA-2.10
-Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
+Проверка выполнения RA-2.10. Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
-### Проверка выполнения RA-3.10
-Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
+Проверка выполнения RA-3.10. Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 ## Обеспечение фактического соответствия CloudNative
 Проверка выполнения RN-2.2. Сейчас при удалении статического файла эндпойнт liveness отвечает успехом, что приводит к 
@@ -30,14 +27,17 @@
 Проверка выполнения NE-3.3. У нас приложение выдаёт код, который создаётся для каждого пользователя свой. Мы принимает, что генерация может выполняться долго и нет возможности распараллелить. Настройте readness пробу таким образом, что 
 когда под "зависает" трафик переключается с него на другие, чтобы не создавать очередь. Например, `let status = fs.readFileSync(status.txt) == 'besy'`. Нагрузка 1 запрос в секунду.
 
-## ------------------------------------
+Рассмотрим отработку readiness пробы во премя обновления. В время обновления пода нам нужно поддержвать работоспособность приложения. Для этого создадим нагрузку:
+``
+while true; do
+  curl -s -I https://[[HOST_SUBDOMAIN]]-900-[[KATACODA_HOST]].environments.katacoda.com/index.html || exit 1
+  echo -n .;
+  sleep 0.2
+done
+``{{execute T2}}
+Будем отслеживать трафик результаты в консоле. Выполнии обновелние с помощью ``kubectl rollout status deployment.v1.apps/app``. Посмотрим, было ли приложение недоступным.
 
-# 19
-## Требование
-Публиковать информацию о готовности каждого компонента к приёму запросов  через readiness endpoint
-
-## TODO 
-Запусить базу по virtual-service-ratings-mysql.yaml / virtual-service-ratings-mysql-vm.yaml / virtual-service-ratings-db.yaml. Прописать простые readiness endpoint на запуск приложения, положить базу. Сделать запросы, чтобы оно читало из базы и предложить найти ошибку в конфигах.
+---------------------------
 
 ## Требование
 Настроить readiness probe в оркестраторе на readiness endpoint
