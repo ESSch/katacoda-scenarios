@@ -9,8 +9,7 @@
 >     1. 21 NE-3.4  Настроить startup probe в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.      
 
 ## Поднимите окружение
-Перед Вами тестовое окружение. Запустите NodeJS приложение `kubectl create -f app.yaml`{{execute T1}} и дождитесь 
-старта приложения http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
+Перед Вами тестовое окружение. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get deploy -f /root/exercise/app.yaml`, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
 
 ## Проверка на формальное соответствие CloudNative
 
@@ -20,11 +19,11 @@
 
 ### Проверка выполнения RA-2.10
 Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь
-при помощи `kubectl describe -f app.yaml`{{execute T1}} о проверки приложения.
+при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 ### Проверка выполнения RA-3.10
 Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь
-при помощи `kubectl describe -f app.yaml`{{execute T1}} о проверки приложения.
+при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 ## Обеспечение фактического соответствия CloudNative
 Проверка выполнения RN-2.2. Сейчас при удалении статического файла эндпойнт liveness отвечает успехом, что приводит к 
