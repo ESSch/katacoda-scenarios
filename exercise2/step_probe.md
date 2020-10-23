@@ -12,8 +12,9 @@
 Перед Вами тестовое окружение. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get -f /root/exercise/app.yaml`, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
 
 ## Проверка на формальное соответствие CloudNative
-1. Запустите `checklist.sh`{{execute T1}}, для выполнения автоматизированных rego проверок (см. файл checklist.rego).
-2. Определите на основании проверки отклонения от стандарта.
+1. Запустите `checklist.sh`{{execute T1}}, для выполнения автоматизированных rego проверок (см. файл checklist.rego),
+проводимых в CI.
+2. Определите на основании проверки отклонения от стандарта: везде статус должне быть "1".
 3. Выполните формальные соответствие требованиям RA-2.10 и RA-3.10: 
 
 Проверка выполнения RA-2.10. Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
