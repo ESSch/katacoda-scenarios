@@ -1,5 +1,10 @@
 #!/bin/bash
 
+curl -sS -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+chmod 755 opa
+mv opa /usr/local/bin
+
+
 function print_policy {
     echo -en "\e[32m"
     echo -n "$1" | jq -r ".allow[]"

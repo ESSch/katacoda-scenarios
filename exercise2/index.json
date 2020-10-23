@@ -36,7 +36,6 @@
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "bookinfo.job.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "chaostest.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "bookinfo-no-deployment.yaml", "target": "/tmp"},
@@ -52,10 +51,6 @@
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "node-port.yaml", "target": "/tmp"},
-          {"file": "immutable-ports.yaml", "target": "/tmp"},
-          {"file": "immutable-port-kiali.yaml", "target": "/tmp"},
-          {"file": "immutable-port-grafana.yaml", "target": "/tmp"},
-          {"file": "immutable-port-jaeger.yaml", "target": "/tmp"},
           {"file": "server.js", "target": "/root/exercise"},
           {"file": "app.yaml", "target": "/root/exercise"}
       ]
