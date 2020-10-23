@@ -6,7 +6,7 @@
   "details": {
     "steps": [{
         "title": "Подготовить учебный кластер",
-        "text": "step1.md",
+        "text": "step_probe.md",
         "verify": "step1-verify.sh"
       }, {
         "title": "Bookinfo Application",
