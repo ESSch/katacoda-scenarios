@@ -70,7 +70,7 @@ wget https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/
 
 ## Уменьшение разамера образа
 Первое, что бросается в глаза, при взгляде на команду запуска, это установка wget, ipywidgets и matplotlib в нарушении ЦИ-3 - так как в продуктовой среде не будет доступа к внешним сервисам и все зависимости должны быть уже в образе. Второе - после скачивания реестра доступных пакетов с помощью `apt update` - отсутствие их очистки `apt-get clean all`. Третье - запуск в приложения в оболочке BASH, что не позволит работать с приложением напрямую и передать ему сигнал на останоку. Создадим образ:
-``
+```
 cat << 'EOF' > Dockerfile
 FROM pytorch/pytorch AS dev
 WORKDIR /workspace
@@ -81,10 +81,10 @@ EOF
 
 docker build -t cifar10_tutorial:0.1 .
 docker images | grep cifar10_tutorial
-``
+```
 
 Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в отсутствии разделения окружений на окружении для разрарботки и сборки и окружения для запуска на производственной среде. На`пример, если мы разрабатываем на Go - для сборки нам нужны испходники библиотек, компилятор и программная оболочка, для запуска нам нужен только результирующий бинарный файл. Если мы разрабатываем на Java нам нужны исходники проекта, оболочка и Maven/Gradle, а для выполнения Java-машина и JAR-архив. Если мы разрабатываем Front-end, то нем нужен оболочка, фреймворк с его cli, исходники проекта и библиотек, NodeJS c его библиотеками, а для выполения - несколько текстовых файлов (css, js, html). В нашем примере для разработки и обучения нужна платформа Anaconda с pytorch, а для запуска - python. В случае с Go нам нужно получить бинарный файл и скопировать в новое окружение, в случае с Java - JAR-архив, в случае с ML - обученная модель. Попросим разработчика разделить окружения с перенести модель в производственное окружение и файл на две части (сохранение в нём в файл ./cifar_net.pth уже есть):
-``
+```
 cat << 'EOF' > Dockerfile
 FROM pytorch/pytorch AS build
 WORKDIR /workspace
@@ -99,9 +99,9 @@ EOF
 
 docker build -t cifar10_tutorial:0.1 .
 docker images | grep cifar10_tutorial
-``
+```
 Попросим DevOps оптимизировать итоговое окружение:
-``
+```
 FROM nvidia/cuda:10.0-base
 ARG CONDA_DIR=/opt/conda
 ARG USERNAME=docker
@@ -113,5 +113,5 @@ RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
     echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER $USERNAME
 WORKDIR /home/$USERNAMECOPY --chown=1000 --from=build /opt/conda/. $CONDA_DIR
-``
+```{{execute T1}}
 Соберите итоговое окружение, проверьте работоспособность и размер образа.
