@@ -83,11 +83,7 @@ docker build -t cifar10_tutorial:0.1 .
 docker images | grep cifar10_tutorial
 `
 
-Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в отсутвии разделения окружений на окружении для разрарботки и сборки и окружения для запуска на производственной среде. Например, если мы разрабатываем на Go - для сборки нам нужны испходники библиотек, компилятор и программная оболочка, для запуска нам нужен только результирующий бинарный файл. Если мы разрабатываем на Java нам нужны исходники проекта, оболочка и Maven/Gradle, а для выполения Java-машина и JAR-архив. В нашем примере для разработки и обучения нажна платформа Anaconda с pytorch, а для запуска - python. В случае с Go нам нужно получить бинарный файл и скопировать в новое окружение, в случае с Java - JAR-архив, в случае с ML - обученная модель. Попросим программиста сохранить модель, а DevOps - разделить оркужения с перенести модель в производственное окружение:
-`
-model.save('/tmp/model');
-model.load('/tmp/model');
-`
+Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в отсутвии разделения окружений на окружении для разрарботки и сборки и окружения для запуска на производственной среде. Например, если мы разрабатываем на Go - для сборки нам нужны испходники библиотек, компилятор и программная оболочка, для запуска нам нужен только результирующий бинарный файл. Если мы разрабатываем на Java нам нужны исходники проекта, оболочка и Maven/Gradle, а для выполения Java-машина и JAR-архив. Если мы разрабатываем Front-end, то нем нужен оболочка, фреймворк с его cli, исходники проекта и библиотек, NodeJS c его библиотеками, а для выполения - несколько текстовых файлов (css, js, html). В нашем примере для разработки и обучения нажна платформа Anaconda с pytorch, а для запуска - python. В случае с Go нам нужно получить бинарный файл и скопировать в новое окружение, в случае с Java - JAR-архив, в случае с ML - обученная модель. Попросим разработчика разделить оркужения с перенести модель в производственное окружение и файл на две части (сохранение в нём в файл ./cifar_net.pth уже есть):
 `
 cat << 'EOF' > Dockerfile
 FROM pytorch/pytorch AS build
@@ -103,4 +99,25 @@ EOF
 
 docker build -t cifar10_tutorial:0.1 .
 docker images | grep cifar10_tutorial
+`
+Поросим DevOps оптимизировать отоговое окружение:
+`
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04 AS build
+
+ARG PYTHON_VERSION=3.7
+ARG CONDA_PYTHON_VERSION=3
+ARG CONDA_DIR=/opt/conda
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git wget unzip bzip2 build-essential ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV PATH $CONDA_DIR/bin:$PATH
+RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda$CONDA_PYTHON_VERSION-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p $CONDA_DIR && \
+    rm -rf /tmp/* && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 `
