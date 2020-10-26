@@ -40,6 +40,25 @@ done
 
 ---------------------------
 
+# Предисловие
+В этом уроке мы рассмотрим работу тяжёлых контейнеров.
+# Предистория
+Для примера мы возьмём:
+wget https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/blitz/cifar10_tutorial.py
+Более подноробно Вы можете узнать о самой программе из документации и нашего курса https://sberbank-school.ru/programs/8538/about .
+Мы его берём не случайно, ведь ML лидирует по потреблению ресурсов в SberCloud, а колличество сотрудников возрастёт в 4 раза. 
+docker run   -it --rm   --name pytorch   -v $PWD:/workspace   pytorch/pytorch bash -c "date && pip install ipywidgets matplotlib > /dev/null && python3 /workspace/main.py && date"
+
+
+Скачиваение библиотеки и датасета - нарушение стандарта
+Обучение - нарушение времени старта контейнера
+ЦИ-6
+ЦИ-5
+
+https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/blitz/cifar10_tutorial.py
+
+------------------------
+
 ## Требование
 Настроить readiness probe в оркестраторе на readiness endpoint
 ## Предистория
