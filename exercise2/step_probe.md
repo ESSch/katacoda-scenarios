@@ -83,7 +83,24 @@ docker build -t cifar10_tutorial:0.1 .
 docker images | grep cifar10_tutorial
 `
 
-Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в отсутвии разделения окружений на окружении для разрарботки и сборки и окружения для запуска на производственной среде. Например, если мы разрабатываем на Go - для сборки нам нужны испходники библиотек, компилятор и программная оболочка, для запуска нам нужен только результирующий бинарный файл. Если мы разрабатываем на Java нам нужны исходники проекта, оболочка и Maven, а для выполения Java-машина и файл с байткодом. В нашем примере для разработки и обучения нажна платформа Anaconda с pytorch, а для запуска - python. В случае с Go нам нужно получить бинарный файл и скопировать в новое окружение, в случае с Java - JAR-архив, в случае с ML - обученная модель. Попросим программиста сохранить модель, а DevOps - разделить оркужения с перенести модель в производственное окружение:
+Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в отсутвии разделения окружений на окружении для разрарботки и сборки и окружения для запуска на производственной среде. Например, если мы разрабатываем на Go - для сборки нам нужны испходники библиотек, компилятор и программная оболочка, для запуска нам нужен только результирующий бинарный файл. Если мы разрабатываем на Java нам нужны исходники проекта, оболочка и Maven/Gradle, а для выполения Java-машина и JAR-архив. В нашем примере для разработки и обучения нажна платформа Anaconda с pytorch, а для запуска - python. В случае с Go нам нужно получить бинарный файл и скопировать в новое окружение, в случае с Java - JAR-архив, в случае с ML - обученная модель. Попросим программиста сохранить модель, а DevOps - разделить оркужения с перенести модель в производственное окружение:
 `
+model.save('/tmp/model');
+model.load('/tmp/model');
+`
+`
+cat << 'EOF' > Dockerfile
+FROM pytorch/pytorch AS build
+WORKDIR /workspace
+ADD https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/blitz/cifar10_tutorial.py /workspace
+RUN pip install ipywidgets matplotlib
+RUN /opt/conda/bin/python3 /workspace/cifar10_tutorial.py
 
+FROM python:3 as production
+COPY --from=build /tmp/model .
+CMD ["/opt/conda/bin/python3", "/tmp/model"]
+EOF
+
+docker build -t cifar10_tutorial:0.1 .
+docker images | grep cifar10_tutorial
 `
