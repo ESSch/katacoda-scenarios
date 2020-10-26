@@ -64,8 +64,23 @@ wget https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/
 ## Анализ нарушений
 ЦИ-3. Мы видим, что контейнер при старте устанавливает библиотеки (wget), скачивает скрипт, да и сам dataset скачивается внутри скрипта.
 
-ЦИ-4. Помомтрим на размер образа `docker images | grep pyto` - он 3,47Gb, а по стандарту не более 1Gb.
+ЦИ-4. Помомтрим на размер образа `docker images | grep pyto`{{execute T1}} - он 3,47Gb, а по стандарту не более 1Gb.
 
 ЦИ-5. Время начала скачивания образа у меня Mon Oct 26 07:30:03 UTC 2020, а завершения - Mon Oct 26 07:31:57 UTC 2020, что по времени занимает 1:54. Время старта контейнера Mon Oct 26 07:35:10 UTC 2020, а завершение - Mon Oct 26 07:43:05 UTC 2020, тем самым подготовка заняла контейнера заняло 7:55, то есть старт приложения занял 9:49, а по стандарту должно быть не более 0:30.
 
+## Уменьшение разамера образа
+Первое, что брасается в глаза при взгляде на команду запуска, это установка wget, ipywidgets и matplotlib в нарушении ЦИ-3 - так как в продуктовой среде не будет доступа к внешним сервисам и все зависимости должны быть уже в образе. Второе - после скачиваения реестра доступных пакетов с помощью `apt update` - отсутствие их очистки. Третье - запуск в приложения в оболочке BASH, что не позволит работать с приложением напрямую и передать ему сигнал на останоку. Создадим образ:
+`
+cat << 'EOF' > Dockerfile
+FROM pytorch/pytorch AS dev
+WORKDIR /workspace
+ADD https://raw.githubusercontent.com/pytorch/tutorials/master/beginner_source/blitz/cifar10_tutorial.py /workspace
+RUN pip install ipywidgets matplotlib
+CMD ["/opt/conda/bin/python3", "/workspace/cifar10_tutorial.py"]
+EOF
 
+docker build -t cifar10_tutorial:0.1 .
+docker images | grep cifar10_tutorial
+`
+
+Посмотрим на слои образа `docker history pytorch/pytorch`{{execute T1}}. Мы видим, что самый большой слой conda (3.37GB) - это пакеты conda. Мы можем посмотреть на более маленьки образы в которых меньше пакеты, например, на `docker pull bitnami/pytorch`, но всё равно размер образа велик - 2.63GB (`docker images | grep bitnami/pytorch`). Проблема в использовании неверного типа образа - образа с платформой для разработки на продуктовой среде, где требуется только запуск приложения.
