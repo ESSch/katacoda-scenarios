@@ -33,6 +33,8 @@
     },
     "assets": {
       "host01": [
+          {"file": "server.js", "target": "/root/exercise"},
+          {"file": "app.yaml", "target": "/root/exercise"},
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "bookinfo.job.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
@@ -50,9 +52,7 @@
           {"file": "timeout.rego", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "node-port.yaml", "target": "/tmp"},
-          {"file": "server.js", "target": "/root/exercise"},
-          {"file": "app.yaml", "target": "/root/exercise"}
+          {"file": "node-port.yaml", "target": "/tmp"}
       ]
     }
   },
