@@ -14,6 +14,7 @@
 ## Рекомендованные курсы и другие источники
 
 1. Обязательно для изучения
+    1. [Первая часть курса по CloudNaive](https://www.katacoda.com/essch/scenarios/exercise) - это вторая часть (продолжение).
     1. Курс на Udemy [Kubernetes for the Absolute Beginners](https://www.udemy.com/course/learn-kubernetes/)
     1. Официальная документация по основным концепциям и объектам Kubernetes - [Kubenetes Concepts](https://kubernetes.io/docs/concepts/)
 1. Дополнительно
