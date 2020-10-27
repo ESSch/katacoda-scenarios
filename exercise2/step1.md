@@ -1,33 +1,12 @@
 ## История
 
-На этом обязательном подготовительном шаге вам необходимо выступить в роли DevOps инженера команды и подготовить необходимую инфраструктуру для успешного прохождения упражнения
+Аналитик передает архитектору оценочный чеклист стандарта CloudNative, в котором заявлено **соответствие** приложения следующим пунктам стандарта:
+> 1. Требования
+>     1. 15 RA-3.10 Публиковать информацию о готовности каждого компонента к приёму запросов через readiness endpoint
+>     1. 16 RA-2.10 Публиковать информацию о жизнеспособности каждого компонента через liveness endpoint
+>     1. 19 RN-2.2  Настроить liveness probe в оркестраторе на liveness endpoint
+>     1. 20 NE-3.3  Настроить readiness probe в оркестраторе на readiness endpoint
+>     1. 21 NE-3.4  Настроить startup probe в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.
 
-* учебный кластер Kubernetes
-* Istio Service Mesh.
-
-Выполните, пожалуйста, все необходимые шаги описанные ниже в этом шаге упражнения.
-
-## Kubernetes
-
-Дождитесь подтверждения запуска кластера в терминале, должно появиться такое сообщение
-
-```
-master $ launch.sh
-Waiting for Kubernetes to start...
-Kubernetes started
-```
-
-Убедитесь, что все поды находятстя в состоянии Running прежде чем двигаться дальше `kubectl get pods --all-namespaces`{{execute T1}}
-
-Исключение может быть сделано для katacoda-cloud-provider он может остаться в статусе CrashLoopBackOff, что никак не влияет на дальнейшие шаги
-
-## Istio
-
-Запустите установку istio `cd /root && /usr/local/bin/istio-install.sh`{{execute T1}}
-
-Проверьте, что все поды Istio в состоянии Running `kubectl get pods -n istio-system`{{execute T1}}
-
-## TroubleShoot
-
-* если зависла установка istio, запустите `/usr/local/bin/troubleshoot.sh`{{execute interrupt T1}}, после выполнения этой команды повторно запустите `/usr/local/bin/istio-install.sh`{{execute T1}}
-* если описанный способ не помог, перезагрузите страницу упражнения и начните сценарий заново.
+## Поднимите окружение
+Перед Вами тестовое окружение. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get -f /root/exercise/app.yaml`, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
