@@ -9,4 +9,4 @@
 >     1. 21 NE-3.4  Настроить startup probe в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.
 
 ## Поднимите окружение
-Перед Вами тестовое окружение. Само приложение - `sever.js`{open}. Сделаем его доступным Kubernetes: `kubectl create configmap app --from-file=/root/exercise/server.js`. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get -f /root/exercise/app.yaml`, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
+Перед Вами тестовое окружение. Само приложение - `sever.js`{open}. Сделаем его доступным Kubernetes: `kubectl create configmap app --from-file=/root/exercise/server.js`. Запустите NodeJS приложение `kubectl create -f /root/exercise/app.yaml`{{execute T1}} и дождитесь старта приложения `kubectl get -f /root/exercise/app.yaml`{{execute T1}}, далее перейдите http://[[HOST_SUBDOMAIN]]-9000-[[KATACODA_HOST]].environments.katacoda.com/index.html .
