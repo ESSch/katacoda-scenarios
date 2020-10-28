@@ -1,11 +1,4 @@
 ## Обеспечение фактического соответствия CloudNative
-
-Здесь Вам потребуется изменить приложение и конфиг (изменения сохраняются сразу), и применить изменения, для этого:
-1. `kubectl delete configmap app`{{execute T1}}
-2. `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}}
-3. `kubectl delete -f /root/exercise/app.yaml`{{execute T1}}
-4. `kubectl apply  -f /root/exercise/app.yaml`{{execute T1}}
-
 Проверка выполнения RN-2.2. Сейчас при удалении статического файла эндпойнт liveness отвечает успехом, что приводит к 
 получению трафику при фактически невозможности выполнять свою функцию. Измените эндпойнт liveness так, чтобы при отсутствии файла приложение было бы пересоздано. Например, `let status = fs.existsSync('front.html') ? 200 : 500`
 

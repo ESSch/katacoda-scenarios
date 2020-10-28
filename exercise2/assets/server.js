@@ -10,8 +10,8 @@ const requestListener = function (req, res) {
             case "/":
                 console.log({front: status});
                 const data = fs.readFileSync("front.html");
-                // res.writeHead(status);
-                res.end("Hello!");
+                res.writeHead(status);
+                res.end(data);
                 break
             case "/liveness":
                 console.log({liveness: status});
