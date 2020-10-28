@@ -1,28 +1,25 @@
 {
   "title": "Cloud Native",
-  "description": "Курс для рахитекторов",
+  "description": "Курс для архитекторов",
   "difficulty": "medium",
   "time": "30 minutes",
   "details": {
     "steps": [{
-        "title": "Изучеть средства управления доступностью",
+        "title": "Изучите средства управления доступностью",
         "text": "step1.md",
         "verify": "step1-verify.sh"
       }, {
-        "title": "Bookinfo Application",
+        "title": "Формальная проверка",
         "text": "step2.md",
         "verify": "step2-verify.sh"
       }, {
-        "title": "Основные объекты приложения",
+        "title": "Фактическая проверка",
         "text": "step3.md",
         "verify": "step3-verify.sh"
       }, {
-        "title": "Диагностика и исправление отклонений",
+        "title": "Продолжение обучения",
         "text": "step4.md"
-      }, {
-        "title": "Проверка размера пода",
-        "text": "step5.md"
-    }],
+      }],
     "intro": {
       "text": "intro.md",
       "code": "foreground.sh",
@@ -49,6 +46,7 @@
           {"file": "immutable-ports.yaml", "target": "/tmp"},
           {"file": "k8s_probes_readiness.rego", "target": "/tmp"},
           {"file": "k8s_probes_liveness.rego",  "target": "/tmp"},
+          {"file": "k8s_probes_startup.rego",   "target": "/tmp"},
           {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
           {"file": "timeout.rego", "target": "/tmp"},
           {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
