@@ -2,7 +2,7 @@
 
 Здесь Вам потребуется изменить приложение и конфиг (изменения сохраняются сразу), и применить изменения, для этого:
 1. `kubectl delete configmap app`{{execute T1}}
-2. `kubectl create configmap app --from-file=/root/exercise/server.js`{{execute T1}}
+2. `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}}
 3. `kubectl delete -f /root/exercise/app.yaml`{{execute T1}}
 4. `kubectl apply  -f /root/exercise/app.yaml`{{execute T1}}
 

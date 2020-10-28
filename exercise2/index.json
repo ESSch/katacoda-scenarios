@@ -33,8 +33,9 @@
     },
     "assets": {
       "host01": [
-          {"file": "server.js", "target": "/root/exercise"},
-          {"file": "app.yaml", "target": "/root/exercise"},
+          {"file": "server.js",  "target": "/root/exercise"},
+          {"file": "app.yaml",   "target": "/root/exercise"},
+          {"file": "front.html", "target": "/root/exercise"},
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "bookinfo.job.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
