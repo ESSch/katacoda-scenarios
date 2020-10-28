@@ -30,6 +30,7 @@ echo -e "\e[0m"
 
 readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_readiness.rego "data.k8s")
 liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego "data.k8s")
+liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego "data.k8s")
 
 # print_policy "$readiness"
 # print_policy "$liveness"

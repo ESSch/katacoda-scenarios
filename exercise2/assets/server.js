@@ -26,8 +26,8 @@ const requestListener = function (req, res) {
         }
     } catch (err) {
         console.log({err});
-        res.writeHead(500);
-        res.end(`${err}`);
+        res.writeHead(status);
+        res.end(`Приложение не работает: ${err}`);
     }
 };
 const server = http.createServer(requestListener);

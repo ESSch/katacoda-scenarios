@@ -12,3 +12,4 @@
 Проверка выполнения RA-2.10. Раскомментируйте liveness эндпойнт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
 Проверка выполнения RA-3.10. Раскомментируйте liveness эндпойт в приложении (`server.js`{{open}}) и его проверку в app.yaml. Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
+
