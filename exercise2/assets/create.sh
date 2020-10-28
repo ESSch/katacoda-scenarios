@@ -4,8 +4,8 @@ tar -cvf /tmp/exercise.tar /root/exercise && \
 docker run \
   --name tar \
   -d \
-  -p 9000:80 \
+  -p 9001:80 \
   -v /tmp/exercise.tar:/usr/share/nginx/html/exercise.tar:ro \
   nginx && \
-curl -I localhost:9000/exercise.tar;
+curl -I localhost:9001/exercise.tar;
 
