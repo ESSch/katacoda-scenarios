@@ -13,16 +13,16 @@ const requestListener = function (req, res) {
                 res.writeHead(status);
                 res.end(data);
                 break
-            case "/liveness":
-                console.log({liveness: status});
-                res.writeHead(status);
-                res.end(`${status}`);
-                break
-            case "/readiness":
-                console.log({readiness: status});
-                res.writeHead(status);
-                res.end(`${status}`);
-                break
+            // case "/liveness":
+            //     console.log({liveness: status});
+            //     res.writeHead(status);
+            //     res.end(`${status}`);
+            //     break
+            // case "/readiness":
+            //     console.log({readiness: status});
+            //     res.writeHead(status);
+            //     res.end(`${status}`);
+            //     break
         }
     } catch (err) {
         console.log({err});
