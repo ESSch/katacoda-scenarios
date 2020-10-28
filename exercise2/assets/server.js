@@ -21,24 +21,30 @@
 
 const http = require("http");
 const requestListener = function (req, res) {
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Type", "text/html");
+    let status = 200; 
     switch (req.url) {
         case "/":
-            res.setHeader("Content-Type", "text/html");
-            res.writeHead(200);
-            res.end("Hello!");
-        case "/liveness":
-            const status = 200;
+            console.log({front: status});
+            // const data = fs.readFileSync("front.html")
             res.writeHead(status);
-            res.end("Ok");
+            res.end("Hello!");
+            break
+        case "/liveness":
+            console.log({liveness: status});
+            res.writeHead(status);
+            res.end(`${status}`);
             break
         case "/readiness":
-            const status = 200;
+            console.log({readiness: status});
             res.writeHead(status);
+            res.end(`${status}`);
             break
     }
 };
 const server = http.createServer(requestListener);
-server.listen(9000, 'localhost', () => {
+const port = 9000;
+const host = 'localhost'
+server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
