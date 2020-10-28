@@ -32,8 +32,6 @@ readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/
 liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego "data.k8s")
 startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego "data.k8s")
 
-# print_policy "$readiness"
-# print_policy "$liveness"
 echo $startup
 echo $readiness
 echo $liveness
