@@ -22,12 +22,13 @@ spec:
       - image: node:8
         name: node
         ports:
-        - containerPort: 9000
+        - name: front
+          containerPort: 9000
+          hostPort: 9000
         volumeMounts:
         - name: app
           mountPath: /app
         command: ["/usr/local/bin/node", "/app/server.js"]
-        #command: ["/bin/sleep", "3600"]
         # readinessProbe:
         #     httpGet:
         #         path: /liveness
