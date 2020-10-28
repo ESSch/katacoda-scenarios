@@ -62,6 +62,7 @@ spec:
   - port: 9000
     protocol: TCP
     targetPort: 9000
+    nodePort: "30333"
   selector:
     app: app
   type: NodePort
