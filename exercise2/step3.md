@@ -5,13 +5,14 @@
 3. `kubectl delete -f /root/exercise/app.yaml`{{execute T1}}
 4. `kubectl apply  -f /root/exercise/app.yaml`{{execute T1}}
 
-Для фактической проверки убедимся в работе приложения. Дождитесь старта контейнера `kubectl get events -w --field-selector involvedObject.kind=Pod`{{execute T4}}: `Scheduled -> Pulled -> Created -> Started`. Так как у нас сейчас нет эндпойтов, проложение будет признано нерабочим и буедт попытка запустить повторно: `-> Unhealthy -> Killing -> Pulled -> Created -> Started`. Раскоментируйте эндпойнты в приложении (`server.js`{{open}}) и примените изменения, как узказано выше. Теперь у нас запущено приложение и можно перейти по ссылке http://[[HOST_SUBDOMAIN]]-30333-[[KATACODA_HOST]].environments.katacoda.com/ и посмотрите реакцию приложения `kubectl logs $(kubectl get pod -l app=app -o jsonpath={@.items[0].metadata.name}) -f`{{execute T5}}.
+Для фактической проверки убедимся в работе приложения. Дождитесь старта контейнера `kubectl get events -w --field-selector involvedObject.kind=Pod`{{execute T4}}: `Scheduled -> Pulled -> Created -> Started`. Так как у нас сейчас нет эндпойтов, проложение будет признано нерабочим и буедт попытка запустить повторно: `-> Unhealthy -> Killing -> Pulled -> Created -> Started`. 
 
-Проверка выполнения RN-2.2. Сейчас при удалении статического файла эндпойнт liveness отвечает успехом, что приводит к 
-получению трафику при фактически невозможности выполнять свою функцию. Измените эндпойнт liveness так, чтобы при отсутствии файла приложение было бы пересоздано. Например, `let status = fs.existsSync('front.html') ? 200 : 500`
+Раскоментируйте эндпойнты в приложении (`server.js`{{open}}) и примените изменения, как узказано выше. Теперь у нас запущено приложение и можно перейти по ссылке http://[[HOST_SUBDOMAIN]]-30333-[[KATACODA_HOST]].environments.katacoda.com/, дождитесь старта приложения и посмотрите реакцию приложения `kubectl logs $(kubectl get pod -l app=app -o jsonpath={@.items[0].metadata.name}) -f`{{execute T5}}.
+
+Проверка выполнения RN-2.2. Сейчас при удалении `kubectl exec $(kubectl get pods -l app=app -o jsonpath={.items[0].metadata.name}) mv /app/front.html /tmp/`{{execute T1}} статического файла эндпойнт liveness отвечает успехом, что приводит к получению трафику при фактически невозможности выполнять свою функцию. Измените эндпойнт liveness так, чтобы при отсутствии файла приложение было бы пересоздано, например, добавив `status = fs.existsSync('front.html') ? 200 : 500`.
 
 Проверка выполнения NE-3.3. У нас приложение выдаёт код, который создаётся для каждого пользователя свой. Мы принимает, что генерация может выполняться долго и нет возможности распараллелить. Настройте readness пробу таким образом, что 
-когда под "зависает" трафик переключается с него на другие, чтобы не создавать очередь. Например, `let status = fs.readFileSync(status.txt) == 'besy'`. Нагрузка 1 запрос в секунду.
+когда под "зависает" трафик переключается с него на другие, чтобы не создавать очередь. Например, `status = fs.readFileSync(status.txt) == 'besy'`. Нагрузка 1 запрос в секунду.
 
 Убедитесь при помощи `kubectl describe -f /root/exercise/app.yaml`{{execute T1}} о проверки приложения.
 
