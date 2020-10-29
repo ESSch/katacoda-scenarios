@@ -1,5 +1,5 @@
 ## Проверка на формальное соответствие CloudNative
-Здесь и далее Вам потребуется изменить приложение и конфиг (изменения сохраняются сразу), и применить изменения, для этого:
+Здесь и далее Вам потребуется изменить приложение `server.js`{{open}} и конфиг `app.yaml`{{open}} (изменения сохраняются сразу), и применить изменения. Для применения необходимо обновить приложение и конфигурацию:
 1. `kubectl delete configmap app`{{execute T1}}
 2. `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}}
 3. `kubectl delete -f /root/exercise/app.yaml`{{execute T1}}

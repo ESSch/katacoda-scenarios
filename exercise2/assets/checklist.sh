@@ -28,9 +28,9 @@ CloudNative checklist
 EOF
 echo -e "\e[0m"
 
-readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_readiness.rego "data.k8s")
-liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego "data.k8s")
-startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego "data.k8s")
+readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_readiness.rego "data.k8s.cloud" | jq)
+liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego  "data.k8s.cloud" | jq)
+startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego   "data.k8s.cloud" | jq)
 
 echo $startup
 echo $readiness
