@@ -9,6 +9,6 @@
 >     1. 21 NE-3.4  Настроить [startup probe](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.
 
 ## Поднимите окружение
-Перед Вами тестовое окружение. Само приложение - `server.js`{{open}}. Сделаем это приложение доступным Kubernetes: `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}}
+Перед Вами тестовое окружение. Само приложение - `server.js`{{open}}. Сделаем это приложение доступным Kubernetes, монтируя его через ConfigMap: `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}} . Такой способ был вы  бран для концентрации внимания на рассматриваемых требованиях стандарта. Производственный процесс же включает в себя пайплайн сборки полноценного образа контейнера с приложением, его версионирование и тестирование, и в случае удовлетворения всех необходимых критериев переноса этого образа в неизменном виде в продуктовую среду для гарантированного запуска.  
 
 Запустите NodeJS приложение: `kubectl apply -f /root/exercise/app.yaml`{{execute T1}}.
