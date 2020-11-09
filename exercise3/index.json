@@ -6,19 +6,7 @@
   "details": {
     "steps": [{
         "title": "Изучите средства управления доступностью",
-        "text": "step1.md",
-        "verify": "step1-verify.sh"
-      }, {
-        "title": "Формальная проверка",
-        "text": "step2.md",
-        "verify": "step2-verify.sh"
-      }, {
-        "title": "Фактическая проверка",
-        "text": "step3.md",
-        "verify": "step3-verify.sh"
-      }, {
-        "title": "Продолжение обучения",
-        "text": "step4.md"
+        "text": "step_probe.md",
       }],
     "intro": {
       "text": "intro.md",
