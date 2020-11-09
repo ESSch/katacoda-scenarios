@@ -6,7 +6,7 @@
   "details": {
     "steps": [{
         "title": "Изучите средства управления доступностью",
-        "text": "step_probe.md",
+        "text": "step_probe.md"
       }],
     "intro": {
       "text": "intro.md",
