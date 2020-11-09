@@ -34,20 +34,23 @@ spec:
         #     httpGet:
         #         path: /liveness
         #         port: 9000
-        #     initialDelaySeconds: 5
-        #     periodSeconds: 5
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
         # livenessProbe:
         #     httpGet:
         #         path: /readiness
         #         port: 9000
-        #     initialDelaySeconds: 5
-        #     periodSeconds: 5
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
         # startupProbe:
         #     httpGet:
-        #         path: /readiness
+        #         path: /startup
         #         port: 9000
-        #     initialDelaySeconds: 5
-        #     periodSeconds: 5
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
       volumes:
         - name: app
           configMap: 

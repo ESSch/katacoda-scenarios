@@ -23,6 +23,11 @@ const requestListener = function (req, res) {
             //     res.writeHead(status);
             //     res.end(`${status}`);
             //     break
+            // case "/startup":
+            //     console.log({readiness: status});
+            //     res.writeHead(status);
+            //     res.end(`${status}`);
+            //     break
         }
     } catch (err) {
         console.log({err});
