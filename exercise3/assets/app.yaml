@@ -1,0 +1,80 @@
+# kubectl create deployment app --image node:8 --dry-run='client' -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app
+    spec:
+      containers:
+      - image: node:8
+        name: node
+        ports:
+        - name: front
+          containerPort: 9000
+          hostPort: 9000
+        volumeMounts:
+        - name: app
+          mountPath: /app
+        command: ["/usr/local/bin/node", "/app/server.js"]
+        workingDir: /app
+        # readinessProbe:
+        #     httpGet:
+        #         path: /liveness
+        #         port: 9000
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
+        # livenessProbe:
+        #     httpGet:
+        #         path: /readiness
+        #         port: 9000
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
+        # startupProbe:
+        #     httpGet:
+        #         path: /startup
+        #         port: 9000
+        #     initialDelaySeconds: 2
+        #     periodSeconds: 2
+        #     failureThreshold: 3
+      volumes:
+        - name: app
+          configMap: 
+            name: app
+status: {}
+
+---
+
+# kubectl expose deploy app --port 9000 --target-port 9000 --type NodePort --dry-run='client' -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app
+  name: app
+spec:
+  ports:
+  - port: 9000
+    protocol: TCP
+    targetPort: 9000
+    nodePort: 30333
+  selector:
+    app: app
+  type: NodePort
+status:
+  loadBalancer: {}

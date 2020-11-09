@@ -1,0 +1,69 @@
+{
+  "title": "Cloud Native",
+  "description": "Курс для архитекторов",
+  "difficulty": "medium",
+  "time": "30 minutes",
+  "details": {
+    "steps": [{
+        "title": "Изучите средства управления доступностью",
+        "text": "step1.md",
+        "verify": "step1-verify.sh"
+      }, {
+        "title": "Формальная проверка",
+        "text": "step2.md",
+        "verify": "step2-verify.sh"
+      }, {
+        "title": "Фактическая проверка",
+        "text": "step3.md",
+        "verify": "step3-verify.sh"
+      }, {
+        "title": "Продолжение обучения",
+        "text": "step4.md"
+      }],
+    "intro": {
+      "text": "intro.md",
+      "code": "foreground.sh",
+      "credits": ""
+    },
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+          {"file": "server.js",  "target": "/root/exercise"},
+          {"file": "app.yaml",   "target": "/root/exercise"},
+          {"file": "front.html", "target": "/root/exercise"},
+          {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "bookinfo.job.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "bookinfo-no-deployment.yaml", "target": "/tmp"},
+          {"file": "antiaffinity.yaml", "target": "/tmp"},
+          {"file": "node-port.yaml", "target": "/tmp"},
+          {"file": "replicas.yaml", "target": "/tmp"},
+          {"file": "traffic-policy.yaml", "target": "/tmp"},
+          {"file": "immutable-ports.yaml", "target": "/tmp"},
+          {"file": "k8s_probes_readiness.rego", "target": "/tmp"},
+          {"file": "k8s_probes_liveness.rego",  "target": "/tmp"},
+          {"file": "k8s_probes_startup.rego",   "target": "/tmp"},
+          {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
+          {"file": "timeout.rego", "target": "/tmp"},
+          {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "node-port.yaml", "target": "/tmp"}
+      ]
+    }
+  },
+  "environment": {
+    "uilayout": "editor-terminal",
+    "uisettings": "yaml",
+    "uieditorpath": "/root/exercise",
+    "terminals": [
+      {"name": "Logs", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"}
+    ]
+  },
+  "backend": {
+    "imageid": "kubernetes-cluster-running:1.18"
+  }
+}
