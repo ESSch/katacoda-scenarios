@@ -4,7 +4,6 @@ curl -sS -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
 chmod 755 opa
 mv opa /usr/local/bin
 
-
 function print_policy {
     echo -en "\e[32m"
     echo -n "$1" | jq -r ".allow[]"
@@ -16,6 +15,21 @@ function print_policy {
 
     echo -en "\e[91m"
     echo -n "$1" | jq -r ".err[]"
+    echo -en "\e[0m"
+}
+
+function format {
+    status=$(echo $1 | jq -r '.status');
+    if (( $status == "1" )); then 
+        echo -en "\e[32m"
+    fi
+    if (( $status == "-1" )); then 
+        echo -en "\e[91m"
+    fi
+    if (( $status == "0" )); then 
+        echo -en "\e[91m"
+    fi
+    echo -n "$1" | jq -r ".msg"
     echo -en "\e[0m"
 }
 
@@ -32,6 +46,8 @@ readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/
 liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego  "data.k8s.cloud")
 startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego   "data.k8s.cloud")
 
-echo $startup   | jq '.startup.apply_startup_probe.status'
-echo $readiness | jq '.readiness.apply_rediness_probe.status'
-echo $liveness  | jq '.liveness.apply_liveness_probe.status'
+startup='{ "startup": { "apply_startup_probe": { "msg": "Проверка на startupProbe не пройдена. Metadata.name", "name": "app", "status": "0", "type": "Проверка на наличие startupProbe endpoint" }, "title_bundle": "Проверка на наличие startupProbe endpoint" } }'
+format $($startup   | jq -r '.startup.apply_startup_probe')
+format $($readiness | jq -r '.readiness.apply_rediness_probe')
+format $($liveness  | jq -r '.liveness.apply_liveness_probe')
+
