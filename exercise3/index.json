@@ -34,10 +34,7 @@
   "environment": {
     "uilayout": "editor-terminal",
     "uisettings": "yaml",
-    "uieditorpath": "/root/exercise",
-    "terminals": [
-      {"name": "Logs", "target": "host01", "command": "kubectl get events -w --sort-by=.metadata.creationTimestamp"}
-    ]
+    "uieditorpath": "/root/exercise"
   },
   "backend": {
     "imageid": "kubernetes-cluster-running:1.18"
