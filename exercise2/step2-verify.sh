@@ -1,1 +1,1 @@
-! checklist.sh | grep -P '"status": "(0|-1)"' && echo "done"
+! checklist.sh | grep -P 'непройдена' && echo "done"
