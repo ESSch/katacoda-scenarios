@@ -20,7 +20,6 @@
       "host01": [
           {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "bookinfo-no-deployment.yaml", "target": "/tmp"},
           {"file": "antiaffinity.yaml", "target": "/tmp"},
           {"file": "node-port.yaml", "target": "/tmp"},
           {"file": "replicas.yaml", "target": "/tmp"},
@@ -28,9 +27,7 @@
           {"file": "immutable-ports.yaml", "target": "/tmp"},
           {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
           {"file": "timeout.rego", "target": "/tmp"},
-          {"file": "checklist.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "node-port.yaml", "target": "/tmp"}
       ]
     }
   },

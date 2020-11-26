@@ -1,1 +1,0 @@
-! checklist.sh | grep -P '"status": "(0|-1)"' && echo "done"
