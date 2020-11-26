@@ -20,13 +20,13 @@ function print_policy {
 
 function format {
     status=$(echo $1 | jq -r '.status');
-    if (( $status == "1" )); then 
+    if [[ "$status" == "1" ]]; then 
         echo -en "\e[32m"
     fi
-    if (( $status == "-1" )); then 
+    if [[ "$status" == "-1" ]]; then 
         echo -en "\e[91m"
     fi
-    if (( $status == "0" )); then 
+    if [[ "$status" == "0" ]]; then 
         echo -en "\e[91m"
     fi
     echo -n "$1" | jq -r ".msg"
