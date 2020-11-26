@@ -18,6 +18,7 @@
     },
     "assets": {
       "host01": [
+          {"file": "sever.py", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "antiaffinity.yaml", "target": "/tmp"},
