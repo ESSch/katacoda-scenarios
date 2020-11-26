@@ -27,7 +27,7 @@
           {"file": "immutable-ports.yaml", "target": "/tmp"},
           {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
           {"file": "timeout.rego", "target": "/tmp"},
-          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"}
       ]
     }
   },
