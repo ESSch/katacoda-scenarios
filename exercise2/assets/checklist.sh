@@ -46,7 +46,6 @@ readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/
 liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego  "data.k8s.cloud")
 startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego   "data.k8s.cloud")
 
-startup='{ "startup": { "apply_startup_probe": { "msg": "Проверка на startupProbe не пройдена. Metadata.name", "name": "app", "status": "0", "type": "Проверка на наличие startupProbe endpoint" }, "title_bundle": "Проверка на наличие startupProbe endpoint" } }'
 format "$(echo $startup   | jq -r '.startup.apply_startup_probe')"
 format "$(echo $readiness | jq -r '.readiness.apply_rediness_probe')"
 format "$(echo $liveness  | jq -r '.liveness.apply_liveness_probe')"
