@@ -1,5 +1,5 @@
 ## Обеспечение фактического соответствия CloudNative
-Здесь и далее Вам потребуется изменить приложение и конфиг (изменения сохраняются сразу), и применить изменения, для этого:
+Здесь и далее Вам потребуется изменить приложение и конфигурационный файл (изменения сохраняются сразу), и применить изменения, для этого:
 1. `kubectl delete configmap app`{{execute T1}}
 
 2. `kubectl create configmap app --from-file=/root/exercise/server.js --from-file=/root/exercise/front.html`{{execute T1}}
@@ -8,7 +8,7 @@
 
 4. `kubectl apply  -f /root/exercise/app.yaml`{{execute T1}}
 
-Для фактической проверки убедимся в работе приложения. Дождитесь старта контейнера `kubectl get events -w --field-selector involvedObject.kind=Pod`{{execute T4}}: `Scheduled -> Pulled -> Created -> Started`. Так как у нас сейчас нет эндпойтов, проложение будет признано нерабочим и буедт попытка запустить повторно: `-> Unhealthy -> Killing -> Pulled -> Created -> Started`. 
+Для фактической проверки убедимся в работе приложения. Дождитесь старта контейнера `kubectl get events -w --field-selector involvedObject.kind=Pod`{{execute T4}}: `Scheduled -> Pulled -> Created -> Started`. Так как у нас сейчас нет эндпойтов, проложение будет признано нерабочим и будет попытка запустить повторно: `-> Unhealthy -> Killing -> Pulled -> Created -> Started`. 
 
 Раскоментируйте эндпойнты в приложении (`server.js`{{open}}) и примените изменения, как узказано выше. Теперь у нас запущено приложение и можно перейти по ссылке http://[[HOST_SUBDOMAIN]]-30333-[[KATACODA_HOST]].environments.katacoda.com/, дождитесь старта приложения и посмотрите реакцию приложения `kubectl logs $(kubectl get pod -l app=app -o jsonpath={@.items[0].metadata.name}) -f`{{execute T5}}.
 
