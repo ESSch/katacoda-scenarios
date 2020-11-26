@@ -10,15 +10,9 @@
 
 Для фактической проверки убедимся в работе приложения. Дождитесь старта контейнера `kubectl get events -w --field-selector involvedObject.kind=Pod`{{execute T4}}: `Scheduled -> Pulled -> Created -> Started`. Так как у нас сейчас нет эндпойтов, проложение будет признано нерабочим и будет попытка запустить повторно: `-> Unhealthy -> Killing -> Pulled -> Created -> Started`. 
 
-Раскоментируйте эндпойнты в приложении (`server.js`{{open}}) и примените изменения, как узказано выше. Теперь у нас запущено приложение и можно перейти по ссылке http://[[HOST_SUBDOMAIN]]-30333-[[KATACODA_HOST]].environments.katacoda.com/, дождитесь старта приложения и посмотрите реакцию приложения `kubectl logs $(kubectl get pod -l app=app -o jsonpath={@.items[0].metadata.name}) -f`{{execute T5}}.
+Раскоментируйте эндпойнты в приложении (`server.js`{{open}}) и примените изменения, как указанно выше. Теперь у нас запущено приложение и можно перейти по ссылке http://[[HOST_SUBDOMAIN]]-30333-[[KATACODA_HOST]].environments.katacoda.com/. Дождитесь старта приложения и посмотрите реакцию приложения: `kubectl logs $(kubectl get pod -l app=app -o jsonpath={@.items[0].metadata.name}) -f`{{execute T5}}.
 
-Добавьте изменния, чтобы можно было изменять файлы server.js и front.html.
-```
-        volumeMounts:
-        - name: app
-          mountPath: /tmp
-        command: ["bash", "-c", "cp /tmp/* /app && node /app/server.js"]
-```
+Добавьте изменния, чтобы можно было изменять файлы `server.js` и `front.html`.
 
 Проверка выполнения RN-2.2. Сейчас при удалении `kubectl exec $(kubectl get pods -l app=app -o jsonpath={.items[0].metadata.name}) mv /app/front.html /tmp/`{{execute T1}} статического файла эндпойнт liveness отвечает успехом, что приводит к получению трафику при фактически невозможности выполнять больше свою функцию приложением. Аналогичным кейсом можно считать, когда в приложении прописано соединение с базой данных и оно не может сейчас его установить, а ожидание и повторы в приложении не предусмотрено. Другим кейсом может быть равёртывании приложения, если в коде ошибка - в таком случае CD по перезагружающемуся контейнеру сможет определить неисправность и откатить образ на предыдущий в imageStream. Измените эндпойнт liveness так, чтобы при отсутствии файла приложение было бы пересоздано, например, добавив `status = fs.existsSync('front.html') ? 200 : 500`.
 

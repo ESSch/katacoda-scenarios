@@ -32,6 +32,6 @@ readiness=$(kubectl get deployments app -o json | opa eval -f pretty -I -d /tmp/
 liveness=$(kubectl  get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_liveness.rego  "data.k8s.cloud")
 startup=$(kubectl   get deployments app -o json | opa eval -f pretty -I -d /tmp/k8s_probes_startup.rego   "data.k8s.cloud")
 
-echo $startup   #| jq
-echo $readiness #| jq
-echo $liveness  #| jq
+echo $startup   | jq '.startup.apply_startup_probe.status'
+echo $readiness | jq '.readiness.apply_rediness_probe.status'
+echo $liveness  | jq '.liveness.apply_liveness_probe.status'

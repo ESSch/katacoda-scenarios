@@ -33,6 +33,7 @@
           {"file": "server.js",  "target": "/root/exercise"},
           {"file": "app.yaml",   "target": "/root/exercise"},
           {"file": "front.html", "target": "/root/exercise"},
+          {"file": "update.sh", "target": "/root/exercise", "chmod": "+x"},
           {"file": "bookinfo.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "bookinfo.job.sh", "target": "/usr/local/bin/", "chmod": "+x"},
           {"file": "istio-install.sh", "target": "/usr/local/bin/", "chmod": "+x"},
