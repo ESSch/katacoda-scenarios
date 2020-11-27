@@ -20,6 +20,13 @@ For examples, visit https://github.com/katacoda/scenario-example
 > 1. 10 Обработка корректным образом недоступности внешнего компонента/сервиса используя retry, timeout management 
 
 ### Excercise number 2
+> Требования
+>     1. 15 RA-3.10 Публиковать информацию о готовности каждого компонента к приёму запросов через [readiness endpoint](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+>     1. 16 RA-2.10 Публиковать информацию о жизнеспособности каждого компонента через [liveness endpoint](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+>     1. 19 RN-2.2  Настроить [liveness probe](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) в оркестраторе на liveness endpoint
+>     1. 20 NE-3.3  Настроить [readiness probe](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) в оркестраторе на readiness endpoint
+>     1. 21 NE-3.4  Настроить [startup probe](https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) в оркестраторе на startup endpoint. В случае невозможности настройки использовать initialDelay в liveness probe.
+
 ### Excercise number 3
 > 1. 28 ЦИ-3 Запретить обращение к внешним сервисам для первоначального запуска контейнера - загружать все настройки, необходимые для запуска компонента, при старте контейнера из ConfigMap, Secrets, внешнего хранилища конфигураций, интегрированного в среду исполнения.
 > 1. 29 ЦИ-4 Использовать контейнеры максимальным размером не более 1024 Мб
