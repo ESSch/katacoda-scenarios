@@ -58,15 +58,12 @@ date && sudo docker run bash -c 'date && /opt/conda/bin/python3  cifar10_tutoria
 * разработчика cделать два скрипта: для обучения и часть для тестирования 
 * DevOps инжинера сделать скрипт (`Dockerfile_multi`) двумя образами: для создания и тестирования
 ``
-cat Dockerfile_multi | sudo docker build -t cifar10_tutorial:0.2 -
+sudo docker build -f Dockerfile_multi -t cifar10_tutorial:0.2 .
+``{{execute T1}}
+``
 docker images | grep cifar10_tutorial
 sudo docker rmi cifar10_tutorial:0.2
 ``{{execute T1}}
-Посмотрим, сколько времени займёт подготовительные операции (с обчением):
-``
-test_tutorial.py
-
-``
 
 ## Уменьшение размера образа - использование минимального базового образа 
 
