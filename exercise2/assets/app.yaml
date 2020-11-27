@@ -27,8 +27,8 @@ spec:
           hostPort: 9000
         volumeMounts:
         - name: app
-          mountPath: /app
-        command: ["/usr/local/bin/node", "/app/server.js"]
+          mountPath: /tmp
+        command: ["bash", "-c", "cp /tmp/* /app && node /app/server.js"]
         workingDir: /app
         # readinessProbe:
         #     httpGet:
