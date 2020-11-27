@@ -17,7 +17,7 @@ Waiting for Kubernetes to start...
 Kubernetes started
 ```
 
-Убедитесь, что все поды находятстя в состоянии Running прежде чем двигаться дальше `kubectl get pods --all-namespaces`{{execute T1}}
+Убедитесь, что все поды находятся в состоянии Running прежде чем двигаться дальше `kubectl get pods --all-namespaces`{{execute T1}}
 
 Исключение может быть сделано для katacoda-cloud-provider он может остаться в статусе CrashLoopBackOff, что никак не влияет на дальнейшие шаги
 

@@ -36,7 +36,6 @@ print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
