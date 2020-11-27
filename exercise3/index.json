@@ -18,19 +18,13 @@
     },
     "assets": {
       "host01": [
-          {"file": "Dockerfile_multi", "target": "/root/exercise/"},
-          {"file": "learn.py", "target": "/root/exercise/"},
-          {"file": "server.py", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "load.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "troubleshoot.sh", "target": "/usr/local/bin/", "chmod": "+x"},
-          {"file": "antiaffinity.yaml", "target": "/tmp"},
-          {"file": "node-port.yaml", "target": "/tmp"},
-          {"file": "replicas.yaml", "target": "/tmp"},
-          {"file": "traffic-policy.yaml", "target": "/tmp"},
-          {"file": "immutable-ports.yaml", "target": "/tmp"},
-          {"file": "virtual-service-ratings-test-abort.yaml", "target": "/tmp"},
-          {"file": "timeout.rego", "target": "/tmp"},
-          {"file": "create.sh", "target": "/usr/local/bin/", "chmod": "+x"}
+        {"file": "Dockerfile_multi", "target": "/root/exercise/"},
+        {"file": "Dockerfile", "target": "/root/exercise/"},
+        {"file": "learn.py",   "target": "/root/exercise/"},
+        {"file": "app.yaml",  "target": "/root/exercise/"},
+        {"file": "server.py",  "target": "/usr/local/bin/"},
+        {"file": "load.sh",    "target": "/usr/local/bin/", "chmod": "+x"},
+        {"file": "create.sh",  "target": "/usr/local/bin/", "chmod": "+x"}
       ]
     }
   },
