@@ -21,7 +21,7 @@
         {"file": "Dockerfile_multi", "target": "/root/exercise/"},
         {"file": "Dockerfile", "target": "/root/exercise/"},
         {"file": "learn.py",   "target": "/root/exercise/"},
-        {"file": "app.yaml",  "target": "/root/exercise/"},
+        {"file": "app.yaml",   "target": "/root/exercise/"},
         {"file": "server.py",  "target": "/usr/local/bin/"},
         {"file": "load.sh",    "target": "/usr/local/bin/", "chmod": "+x"},
         {"file": "create.sh",  "target": "/usr/local/bin/", "chmod": "+x"}
