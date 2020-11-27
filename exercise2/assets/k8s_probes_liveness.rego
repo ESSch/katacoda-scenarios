@@ -39,7 +39,7 @@ apply_liveness_probe = {"msg": msg, "status": status, "type": type, "name": name
  else = {"msg": msg, "status": status, "type": type, "name": name  }{
     deployment:=lower(input.kind)
     deployment == "deployment"
-    msg := "Проверка на livenessProbe не пройдена. Metadata.name"
+    msg := "Проверка на livenessProbe не пройдена."
     status:= "0"
     type:="Проверка на наличие livenessProbe endpoint"
     name:=input.metadata.name

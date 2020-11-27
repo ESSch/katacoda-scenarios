@@ -39,7 +39,7 @@ apply_startup_probe = {"msg": msg, "status": status, "type": type, "name": name 
  else = {"msg": msg, "status": status, "type": type, "name": name  }{
     deployment:=lower(input.kind)
     deployment == "deployment"
-    msg := "Проверка на startupProbe не пройдена. Metadata.name"
+    msg := "Проверка на startupProbe не пройдена."
     status:= "0"
     type:="Проверка на наличие startupProbe endpoint"
     name:=input.metadata.name
