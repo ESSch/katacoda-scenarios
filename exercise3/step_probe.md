@@ -39,6 +39,7 @@ cat Dockerfile | sudo docker build -t cifar10_tutorial:0.1 -
 docker images | grep cifar10_tutorial
 sudo docker rmi cifar10_tutorial:0.1
 ``{{execute T1}}
+
 Теперь образ может быть создан в pipeline и уже запущен без внешних зависимостей в установочных скриптах на тестовом стенде где-то за 1 секунду:
 ``
 date && sudo docker run bash -c 'date && /opt/conda/bin/python3  cifar10_tutorial.py'
@@ -65,33 +66,35 @@ docker images | grep cifar10_tutorial
 sudo docker rmi cifar10_tutorial:0.2
 ``{{execute T1}}
 
-## Уменьшение размера образа - использование минимального базового образа 
+sudo docker run --rm --name cifar cifar10_tutorial:0.2 ls /tmp
 
-Попросим DevOps оптимизировать итоговое окружение. Базовый образ nvidia/cuda:10.0-base занимает 109MB:
+
+sudo docker images | grep cifar10_tutorial
+sudo docker run --name cifar -it cifar10_tutorial:0.2 bash 
+cd /root/exercise/ && sudo docker build -f Dockerfile_small -t cifar10_cuda .  
+
+## Уменьшение размера образа - использование минимального базового образа для продуктовой среды
+
+В отличии от разработки, где нам требуется определённое окружение и инструментарий, для продуктовой среды используется минимальный набор, необходимый для запуска приложения. В нашем случае нам нужен сервер, способный выдвать предсказания на основе входных данных на основе уже обученной моделе. Для этого ежу есть готовый образ с минимальным размером (286GB) и встроенным сервером:
 ``
-FROM nvidia/cuda:10.0-base
-ARG CONDA_DIR=/opt/conda
-ARG USERNAME=docker
-ARG USERID=1000
-ENV PATH $CONDA_DIR/bin:$PATH
-RUN useradd --create-home -s /bin/bash --no-user-group -u $USERID $USERNAME && \
-    chown $USERNAME $CONDA_DIR -R && \
-    adduser $USERNAME sudo && \
-    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-USER $USERNAME
-WORKDIR /home/$USERNAMECOPY --chown=1000 --from=build /opt/conda/. $CONDA_DIR
+docker pull tensorflow/serving
+docker images | grep serving
 ``{{execute T1}}
-Соберите итоговое окружение, проверьте работоспособность и размер образа.
 
-Можно скомпилировать при помощи TorchScript + PyTorch JIT в бинарный файл, что даст меньший размер 
-и большую скорость.
+Проверим его работу:
+``
+git clone https://github.com/tensorflow/serving
+TESTDATA="$(pwd)/serving/tensorflow_serving/servables/tensorflow/testdata"
+docker run -t --rm -p 8501:8501 \
+    -v "$TESTDATA/saved_model_half_plus_two_cpu:/models/half_plus_two" \
+    -e MODEL_NAME=half_plus_two \
+    tensorflow/serving &
+curl -d '{"instances": [1.0, 2.0, 5.0]}' \
+    -X POST http://localhost:8501/v1/models/half_plus_two:predict
+``{{execute T1}}
 
 ## Объём памяти и скорость работы.
-Для большей точности разработчики по аналогии с GoogLeNet и ансамблями методов создали четыре конфигурации сети, запуская их процессами. Из-за того, что PyTorch потребляет примерно 2Gb на ядро Cuda - то это приведёт к потреблению более 8Gb (нарушению Ци-7) и более 4 ядер (4 ядра на воркеры и одно на родительский процесс) (нарушает Ци-8). Такой подход масштабирования приводит к множественным процессам, что противоречит RS-3.1. Запустим их в отдельных контейнерах (подах).
-``
-import os
-print(os.environ["CUDA_VISIBLE_DEVICES"])
-``
+Для большей точности разработчики по аналогии с GoogLeNet и ансамблями методов создали четыре конфигурации сети, запуская их процессами. Из-за того, что PyTorch потребляет примерно 2Gb на ядро Cuda - то это приведёт к потреблению более 8Gb (нарушению Ци-7) и более 4 ядер (4 ядра на воркеры и одно на родительский процесс) (нарушает Ци-8). Такой подход масштабирования приводит к множественным процессам, что противоречит RS-3.1.
 
 ## Горизонтальное масштабирование
 При работе уже результирующего образа, мы подаём на сервер группу картинок, которые мы сжимаем под необходимую размерность и формат. Размерность и формат для этой сети должна быть также как и cifar10: 32x32 и bpm. Это занимает много ресурсов, поэтому нам необходимо распаралелить обработку запросов. По стандарту, необходимо масштабировать средствами kubernetes для его контроля и снятия проблемы роста потоков в контейнере при нагрузке. Запустим сервер `docker run sever -p 8000:8000`{{execute T1}}

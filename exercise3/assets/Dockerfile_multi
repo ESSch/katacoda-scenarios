@@ -7,6 +7,6 @@ RUN /opt/conda/bin/python3 /workspace/cifar10_tutorial.py
 FROM python:3 as production
 WORKDIR /tmp
 COPY --from=build /workspace/cifar_net.pth .
-ADD /root/learn/learn.py /tmp/
+ADD learn.py /tmp/
 CMD ["/bin/sleep", "3600"]
 # python3 /tmp/learn.py
